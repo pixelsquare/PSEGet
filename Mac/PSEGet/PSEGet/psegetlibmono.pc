@@ -1,0 +1,6 @@
+Name: PSEGetLibMono
+Description: PSEGetLibMono
+Version: 0.1
+
+Requires: 
+Libs: -r:./PSEGetLibMono.dll

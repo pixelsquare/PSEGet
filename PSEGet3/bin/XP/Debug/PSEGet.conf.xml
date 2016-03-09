@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <FormTop>24.666666666666664</FormTop>
+  <FormLeft>24.666666666666664</FormLeft>
+  <OutputFolder></OutputFolder>
+  <CSVOutputFormat>S,D,O,H,L,C,V,F</CSVOutputFormat>
+  <CSVDateFormat>MM/DD/YYYY</CSVDateFormat>
+  <CSVDelimiter>,</CSVDelimiter>
+  <DataSource>DownloadAndConvert</DataSource>
+  <IndexValueAsVolume>true</IndexValueAsVolume>
+  <TargetOutput>CSV</TargetOutput>
+  <ReportUrl>http://www.pse.com.ph/resource/dailyquotationreport/file/</ReportUrl>
+  <MetastockSingleDirectory>false</MetastockSingleDirectory>
+  <IndexValueDivisor>1000</IndexValueDivisor>
+  <ReportFilenameFormat>stockQuotes_%mm%dd%yyyy</ReportFilenameFormat>
+</AppConfiguration>
