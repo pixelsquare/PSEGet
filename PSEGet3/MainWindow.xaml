@@ -1,0 +1,71 @@
+﻿<Window x:Name="TheMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:PSEGet3.View"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        x:Class="PSEGet3.MainWindow"
+        xmlns:comp="clr-namespace:PSEGet3.View.Components"
+        Title="PSEGet v3.0"
+        Height="570"
+        Width="420"
+        Closing="MainWindow_ClosingHandler"
+        LocationChanged="MainWindow_LocationChanged"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Skins/WhistlerBlue.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="B" Modifiers="Alt" Command="{Binding TerminateCommand}" />
+        <KeyBinding Key="G" Modifiers="Alt" Command="{Binding ConvertCommand}" />
+    </Window.InputBindings>
+
+    <Window.DataContext>
+        <Binding Path="Main" Source="{StaticResource Locator}" />
+    </Window.DataContext>
+
+    <Grid x:Name="LayoutRoot">
+
+        <TabControl x:Name="MainTab" TabIndex="0">
+            <TabItem Header="Converter"
+                     VerticalContentAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch">
+                <local:ConverterView />
+
+            </TabItem>
+
+            <TabItem Header="Market Summary" x:Name="tabMarketSummary"
+                     VerticalContentAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch">
+                <local:MarketSummaryView x:Name="marketSummaryView" />
+            </TabItem>
+
+            <!--
+                <TabItem Header="Intraday"
+                     VerticalContentAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch">
+                    <local:IntradayView />
+                </TabItem>-->
+
+            <TabItem Header="Manage Data"
+                     VerticalContentAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch">
+                <local:ManageDataView />
+            </TabItem>
+
+            <TabItem Header="About"
+                     VerticalContentAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch">
+                <local:HelpView />
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</Window>

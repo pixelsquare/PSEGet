@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGet3", "PSEGet3\PSEGet3.csproj", "{C55A5C06-CB72-408E-95EA-913E483ACE52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetLibWindows", "PSEGetLibWindows\PSEGetLibWindows.csproj", "{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetTest", "PSEGetTest\PSEGetTest.csproj", "{5038F22F-99C0-4140-8314-2F42652A3AA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetLib", "PSEGetLib\PSEGetLib.csproj", "{CF21D348-64FE-4EE6-B69E-5066CAC2C234}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{9661B2CB-58A1-4227-92D1-0A17EB0475B7}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\..\My Programs\MVVMLight\4.1\Mvvm Light Toolkit\Binaries\WPF45\GalaSoft.MvvmLight.Extras.WPF45.dll = ..\..\..\..\..\..\My Programs\MVVMLight\4.1\Mvvm Light Toolkit\Binaries\WPF45\GalaSoft.MvvmLight.Extras.WPF45.dll
+		..\..\..\..\..\..\My Programs\MVVMLight\4.1\Mvvm Light Toolkit\Binaries\WPF45\GalaSoft.MvvmLight.WPF45.dll = ..\..\..\..\..\..\My Programs\MVVMLight\4.1\Mvvm Light Toolkit\Binaries\WPF45\GalaSoft.MvvmLight.WPF45.dll
+		..\..\..\..\..\..\My Programs\IKVM\ikvm-7.2.4630.5\bin\IKVM.OpenJDK.Core.dll = ..\..\..\..\..\..\My Programs\IKVM\ikvm-7.2.4630.5\bin\IKVM.OpenJDK.Core.dll
+		..\..\..\..\..\..\My Programs\IKVM\ikvm-7.2.4630.5\bin\IKVM.OpenJDK.SwingAWT.dll = ..\..\..\..\..\..\My Programs\IKVM\ikvm-7.2.4630.5\bin\IKVM.OpenJDK.SwingAWT.dll
+		LateBindingLib\LateBindingHelper.dll = LateBindingLib\LateBindingHelper.dll
+		..\..\..\..\..\..\My Programs\pdfbox-1.6.0\pdfbox\bin\pdfbox-1.6.0.dll = ..\..\..\..\..\..\My Programs\pdfbox-1.6.0\pdfbox\bin\pdfbox-1.6.0.dll
+		..\..\..\..\..\..\My Programs\SQLite.Net\Net45\x64\System.Data.SQLite.dll = ..\..\..\..\..\..\My Programs\SQLite.Net\Net45\x64\System.Data.SQLite.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C55A5C06-CB72-408E-95EA-913E483ACE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C55A5C06-CB72-408E-95EA-913E483ACE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C55A5C06-CB72-408E-95EA-913E483ACE52}.Debug|x64.ActiveCfg = Debug|x64
+		{C55A5C06-CB72-408E-95EA-913E483ACE52}.Debug|x64.Build.0 = Debug|x64
+		{C55A5C06-CB72-408E-95EA-913E483ACE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C55A5C06-CB72-408E-95EA-913E483ACE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C55A5C06-CB72-408E-95EA-913E483ACE52}.Release|x64.ActiveCfg = Release|x64
+		{C55A5C06-CB72-408E-95EA-913E483ACE52}.Release|x64.Build.0 = Release|x64
+		{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}.Debug|x64.ActiveCfg = Debug|x64
+		{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}.Debug|x64.Build.0 = Debug|x64
+		{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}.Release|x64.ActiveCfg = Release|x64
+		{35F8E835-D31B-4A83-82C7-A0E34AF7AF59}.Release|x64.Build.0 = Release|x64
+		{5038F22F-99C0-4140-8314-2F42652A3AA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5038F22F-99C0-4140-8314-2F42652A3AA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5038F22F-99C0-4140-8314-2F42652A3AA5}.Debug|x64.ActiveCfg = Debug|x64
+		{5038F22F-99C0-4140-8314-2F42652A3AA5}.Debug|x64.Build.0 = Debug|x64
+		{5038F22F-99C0-4140-8314-2F42652A3AA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5038F22F-99C0-4140-8314-2F42652A3AA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5038F22F-99C0-4140-8314-2F42652A3AA5}.Release|x64.ActiveCfg = Release|x64
+		{5038F22F-99C0-4140-8314-2F42652A3AA5}.Release|x64.Build.0 = Release|x64
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Debug|x64.ActiveCfg = Debug|x64
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Debug|x64.Build.0 = Debug|x64
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|x64.ActiveCfg = Release|x64
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+EndGlobal

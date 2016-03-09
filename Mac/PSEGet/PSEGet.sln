@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacPSEGet", "MacPSEGet.csproj", "{B236970A-4978-4D3F-B5BD-C917A1BAFD27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetLib", "..\..\PSEGetLib\PSEGetLib.csproj", "{CF21D348-64FE-4EE6-B69E-5066CAC2C234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetLibMono", "..\..\PSEGetLibMono\PSEGetLibMono.csproj", "{787CCF54-9434-45F5-AF20-162D799938E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{787CCF54-9434-45F5-AF20-162D799938E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{787CCF54-9434-45F5-AF20-162D799938E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{787CCF54-9434-45F5-AF20-162D799938E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{787CCF54-9434-45F5-AF20-162D799938E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B236970A-4978-4D3F-B5BD-C917A1BAFD27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B236970A-4978-4D3F-B5BD-C917A1BAFD27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B236970A-4978-4D3F-B5BD-C917A1BAFD27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B236970A-4978-4D3F-B5BD-C917A1BAFD27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MacPSEGet.csproj
+	EndGlobalSection
+EndGlobal

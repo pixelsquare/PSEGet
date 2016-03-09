@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="PSEGet3.View.MarketActivityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="420"
+             DataContext="{Binding MarketActivityVM, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="3 0 0 0" />
+        </Style>
+        <Style TargetType="{x:Type RowDefinition}">
+            <Setter Property="Height" Value="25" />
+        </Style>
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="0 0 0 1" />
+            <Setter Property="BorderBrush" Value="LightGray" />
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Height="220">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="120" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0">
+                <Label Content="Advances" />
+            </Border>
+            <Border Grid.Column="1">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding Advances, StringFormat={}{0:#\,###}}" />
+                </Label>
+            </Border>
+
+            <Border Grid.Row="1">
+                <Label Content="Declines" Grid.Row="1" />
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="1">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding Declines, StringFormat={}{0:#\,###}}" />
+                </Label>
+            </Border>
+
+            <Border Grid.Row="2">
+                <Label Content="Unchanged" Grid.Row="2" />
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding Unchanged, StringFormat={}{0:#\,###}}" />
+                </Label>
+            </Border>
+
+            <Border Grid.Row="3">
+                <Label Content="Traded Issues" Grid.Row="3" />
+            </Border>
+
+            <Border Grid.Row="3" Grid.Column="1">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding TradedIssues, StringFormat={}{0:#\,###}}" />
+                </Label>
+            </Border>
+
+            <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Grid.Row="4">
+                <Label Content="Number of Trades" Grid.Row="4" />
+            </Border>
+            <Border Grid.Row="5" Grid.Column="1">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding NumTrades, StringFormat={}{0:#\,###}}" />
+                </Label>
+            </Border>
+
+            <Border Grid.Row="0" Grid.Column="2">
+                <Label Content="Grand Total" Grid.Row="5" />
+            </Border>
+            <Border Grid.Row="0" Grid.Column="3">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding StringFormat=\{0:N0\}, Path=CompositeValue}" />
+                </Label>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="2">
+                <Label Content="Foreign Buying" Grid.Row="6" />
+            </Border>
+            <Border Grid.Row="1" Grid.Column="3">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding TotalForeignBuying, StringFormat=\{0:#\,##0\}}" />
+                </Label>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="2">
+                <Label Content="Foreign Selling" Grid.Row="7" />
+            </Border>
+            <Border Grid.Row="2" Grid.Column="3">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding TotalForeignSelling, StringFormat={}{0:#\,###}}" />
+                </Label>
+            </Border>
+
+            <Border Grid.Row="3" Grid.Column="2">
+                <Label Content="Cross Volume" Grid.Row="8" />
+            </Border>
+            <Border Grid.Row="3" Grid.Column="3">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding MainBoardCrossVolume, StringFormat={}{0:#\,###}}" />
+                </Label>
+            </Border>
+
+            <Border Grid.Row="4" Grid.Column="2">
+                <Label Content="Cross Value" Grid.Row="9" />
+            </Border>
+            <Border Grid.Row="4" Grid.Column="3">
+                <Label HorizontalContentAlignment="Right">
+                    <TextBlock Text="{Binding MainBoardCrossValue, StringFormat={}{0:#\,###}}" />
+                </Label>
+            </Border>
+        </Grid>
+        <Label Content="Block Sales" FontWeight="Bold" />
+        <DataGrid ItemsSource="{Binding BlockSales}" Height="70">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Width="60" Binding="{Binding Symbol}" />
+                <DataGridTextColumn Header="Price" Width="70" Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Volume" Width="90" Binding="{Binding Volume}" />
+                <DataGridTextColumn Header="Value" Width="90" Binding="{Binding Value}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</UserControl>
