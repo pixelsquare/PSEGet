@@ -420,3 +420,10 @@ PSEGetTest/obj/x64/Release/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B1
 PSEGetTest/obj/x64/Release/build.force
 PSEGetTest/stockQuotes_09202010.pdf
 PSEGetTest/stockQuotes_11062013.pdf
+PSEGet3/bin/
+PSEGet3/obj/
+PSEGetLib/bin/
+PSEGetLib/obj/
+PSEGetLibWindows/bin/
+PSEGetLibWindows/obj/
+PSEGetTest/obj/
