@@ -81,9 +81,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Arnold\Documents\Projects\DotNetLib\IKVM\ikvm-7.2.4630.5\bin\IKVM.OpenJDK.SwingAWT.dll</HintPath>
     </Reference>
-    <Reference Include="LateBindingHelper, Version=2.2.18.4617, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LateBindingLib\LateBindingHelper.dll</HintPath>
+    <Reference Include="LateBindingHelper">
+      <HintPath>..\Library\LateBindingHelper.dll</HintPath>
     </Reference>
     <Reference Include="pdfbox-1.6.0, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

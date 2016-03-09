@@ -15,12 +15,6 @@ Mac/PSEGet/PSEGet/PSEGetLib.dll.mdb
 Mac/PSEGet/PSEGet/PSEGetLibMono.dll.mdb
 Mac/PSEGet/gtk-gui/generated.cs
 Mac/PSEGet/gtk-gui/gui.stetic
-PSEGet3/Properties/DataSources/PSEGet3.Data.psegetEntities.datasource
-PSEGet3/Properties/DesignTimeResources.xaml
-PSEGet3/Properties/Resources.Designer.cs
-PSEGet3/Properties/Resources.resx
-PSEGet3/Properties/Settings.Designer.cs
-PSEGet3/Properties/Settings.settings
 PSEGet3/bin/XP/Debug/pseget3.dat
 PSEGet3/bin/XP/PSEGet-XP.zip
 PSEGet3/bin/XP/Release/GalaSoft.MvvmLight.Extras.WPF4.xml
@@ -376,7 +370,6 @@ PSEGet3/obj/x86/Release/Windows/ProgressDialog.baml
 PSEGet3/obj/x86/Release/Windows/ProgressDialog.g.cs
 PSEGet3/obj/x86/Release/Windows/ProgressDialog.g.i.cs
 PSEGetLib/Data/Service/xxx.patch
-PSEGetLib/Properties/AssemblyInfo.cs
 PSEGetLib/bin/x64/Debug/GalaSoft.MvvmLight.WPF45.xml
 PSEGetLib/bin/x64/Release/GalaSoft.MvvmLight.WPF45.xml
 PSEGetLib/obj/x64/Debug/PSEGetLib.csproj.FileListAbsolute.txt
