@@ -4,11 +4,10 @@ using System.Linq;
 using PSEGetLib.Converters;
 using PSEGetLib.DocumentModel;
 using System.IO;
-using org.apache.pdfbox.pdmodel;
-using org.apache.pdfbox.util;
 using System.Threading;
 using LateBindingHelper;
 using System.Diagnostics;
+using PSEGetLib.Interfaces;
 
 namespace PSEGetLib
 {
@@ -24,11 +23,14 @@ namespace PSEGetLib
 
         public static PSEDocument ConvertReportFile(string fullFilePath, OutputSettings outputSettings)
         {
-            var doc = PDDocument.load(fullFilePath);
-            //PSEDocument pd = new PSEDocument();
+            //var doc = PDDocument.load(fullFilePath);
+            ////PSEDocument pd = new PSEDocument();
 
-            var stripper = new PDFTextStripper();
-            string pdfText = stripper.getText(doc).TrimEnd();
+            //var stripper = new PDFTextStripper();
+            //string pdfText = stripper.getText(doc).TrimEnd();
+
+            IPdfService pdfService = new PdfTextSharpService();
+            string pdfText = pdfService.ExtractTextFromPdf(fullFilePath);
 
             var reader = new PSEReportReader(pdfText);
             var document = new PSEDocument();

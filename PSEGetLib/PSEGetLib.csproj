@@ -128,7 +128,10 @@
     <Compile Include="DownloadHistoricalDataHelper.cs" />
     <Compile Include="DownloadParams.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Interfaces\IPdfService.cs" />
+    <Compile Include="Interfaces\IPSEReportReader.cs" />
     <Compile Include="Interfaces\IReportDownloader.cs" />
+    <Compile Include="Service\PdfBoxService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PSEGetException.cs" />
     <Compile Include="PSEReportReader.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="HistoricalDataDownloader.cs" />
     <Compile Include="HistoricalDataReader.cs" />
     <Compile Include="ReportDownloaderAsync.cs" />
+    <Compile Include="Service\PdfTextSharpService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

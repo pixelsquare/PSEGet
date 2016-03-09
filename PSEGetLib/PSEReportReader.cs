@@ -4,16 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Collections.Specialized;
 using PSEGetLib.DocumentModel;
+using PSEGetLib.Interfaces;
 using System.Globalization;
 
 namespace PSEGetLib
 {
-    interface IPSEReportReader
-    {
-        void Fill(PSEDocument pseDocument);
-        void Fill(PSEDocument pseDocument, string pseReportFile);
-    }
-
     public class EUnsupportedReportFormat : Exception
     {
         public override string Message

@@ -25,7 +25,7 @@ namespace PSEGetLib
         public string SavePath { get; set; }
 
         public void Download()
-        {
+        {            
             if (DownloadParams.ToDate < DownloadParams.FromDate)
                 throw new PSEGetException("Invalid date range.");
 
