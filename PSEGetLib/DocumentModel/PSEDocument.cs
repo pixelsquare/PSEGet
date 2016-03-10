@@ -37,8 +37,8 @@ namespace PSEGetLib.DocumentModel
         private int _numAdvance;
         private int _numDeclines;
         private int _numUnchanged;
-        private int _numTraded;
-        private int _numTrades;
+        //private int _numTraded;
+        //private int _numTrades;
         private ulong _oddLotVolume;
         private double _oddLotValue;
         private ulong _mainCrossVolume;
@@ -227,14 +227,16 @@ namespace PSEGetLib.DocumentModel
 
         public int NumTraded
         {
-            get { return _numTraded; }
-            set { _numTraded = value; }
+            //get { return _numTraded; }
+            //set { _numTraded = value; }
+            get; set;
         }
 
         public int NumTrades
         {
-            get { return _numTrades; }
-            set { _numTrades = value; }
+            //get { return _numTrades; }
+            //set { _numTrades = value; }
+            get; set;
         }
 
         public ulong OddLotVolume

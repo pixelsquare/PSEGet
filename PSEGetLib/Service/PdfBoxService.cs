@@ -3,9 +3,9 @@ using org.apache.pdfbox.pdmodel;
 using org.apache.pdfbox.util;
 using PSEGetLib.Interfaces;
 
-namespace PSEGetLib
+namespace PSEGetLib.Service
 {
-    public class PDFService : IPdfService
+    public class PdfBoxService : IPdfService
     {
         public string ExtractTextFromPdf(string filePath)
         {

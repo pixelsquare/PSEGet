@@ -8,6 +8,7 @@ using System.Threading;
 using LateBindingHelper;
 using System.Diagnostics;
 using PSEGetLib.Interfaces;
+using Microsoft.Practices.ServiceLocation;
 
 namespace PSEGetLib
 {
@@ -21,7 +22,7 @@ namespace PSEGetLib
     {
         //private static OutputSettings _outputSettings;
 
-        public static PSEDocument ConvertReportFile(string fullFilePath, OutputSettings outputSettings)
+        public static PSEDocument LoadFromReportFile(string fullFilePath, OutputSettings outputSettings)
         {
             //var doc = PDDocument.load(fullFilePath);
             ////PSEDocument pd = new PSEDocument();
@@ -29,7 +30,7 @@ namespace PSEGetLib
             //var stripper = new PDFTextStripper();
             //string pdfText = stripper.getText(doc).TrimEnd();
 
-            IPdfService pdfService = new PdfTextSharpService();
+            IPdfService pdfService = ServiceLocator.Current.GetInstance<IPdfService>(); 
             string pdfText = pdfService.ExtractTextFromPdf(fullFilePath);
 
             var reader = new PSEReportReader(pdfText);
@@ -68,41 +69,7 @@ namespace PSEGetLib
                 return "\r";
             else
                 return "\n";	
-        }
-
-        private static bool _isAmibrokerInstalled;
-        public static bool IsAmibrokerInstalled()
-        {
-            try
-            {
-                if (!_isAmibrokerInstalled)
-                {
-                    Process[] localByName = Process.GetProcessesByName("broker");
-                    if (localByName.Any())
-                        _isAmibrokerInstalled = true;
-                    else
-                    {
-                        IOperationInvoker amiInvoker = BindingFactory.CreateAutomationBinding("Broker.Application");
-                        try
-                        {
-                            _isAmibrokerInstalled = amiInvoker != null;
-                        }
-                        finally
-                        {
-                            if (amiInvoker != null)
-                                amiInvoker.Method("Quit").Invoke();
-                        }
-                    }
-                }
-                return _isAmibrokerInstalled;
-            }
-            catch
-            {
-                return false;
-            }
-                        
-        }
-
+        }        
     }
     
 }

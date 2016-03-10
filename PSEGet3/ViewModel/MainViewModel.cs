@@ -47,15 +47,14 @@ namespace PSEGet3.ViewModel
                             //this.SaveAppConfiguration();
                             TerminateCommand.Execute(null);
                         }
-                    }
-                    );
+                    });
             }
         }
 
-        public string Welcome
-        {
-            get { return "Welcome to MVVM Light"; }
-        }
+        //public string Welcome
+        //{
+        //    get { return "Welcome to MVVM Light"; }
+        //}
 
         public RelayCommand TerminateCommand { get; private set; }
 

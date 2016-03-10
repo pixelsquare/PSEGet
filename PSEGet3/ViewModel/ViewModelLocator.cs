@@ -16,6 +16,12 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Ioc;
+using PSEGetLib;
+using PSEGetLib.Service;
+using PSEGetLib.Data.Service;
+using PSEGetLib.Interfaces;
 
 namespace PSEGet3.ViewModel
 {
@@ -58,21 +64,21 @@ namespace PSEGet3.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
-        private static MainViewModel _main;
-        private static ConverterViewModel _converterViewModel;
-        private static ConvertFromFileViewModel _convertFromFileViewModel;
-        private static DownloadAndConvertViewModel _downloadAndConvertViewModel;
-        private static DownloadHistoricalDataViewModel _downloadHistoricalViewModel;
-        private static OutputSettingsViewModel _outputSettingsViewModel;
-        private static MarketSummaryViewModel _marketSummaryViewModel;
-        private static MessageWindowViewModel _errorWindowViewModel;
-        private static MarketActivityViewModel _marketActivityViewModel;
-        private static ProgressDialogViewModel _progressDialogViewModel;
+        //private static MainViewModel _main;
+        //private static ConverterViewModel _converterViewModel;
+        //private static ConvertFromFileViewModel _convertFromFileViewModel;
+        //private static DownloadAndConvertViewModel _downloadAndConvertViewModel;
+        //private static DownloadHistoricalDataViewModel _downloadHistoricalViewModel;
+        //private static OutputSettingsViewModel _outputSettingsViewModel;
+        //private static MarketSummaryViewModel _marketSummaryViewModel;
+        //private static MessageWindowViewModel _errorWindowViewModel;
+        //private static MarketActivityViewModel _marketActivityViewModel;
+        //private static ProgressDialogViewModel _progressDialogViewModel;
 
         /// <summary>
         ///     Initializes a new instance of the ViewModelLocator class.
         /// </summary>
-        public ViewModelLocator()
+        static ViewModelLocator()
         {
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
@@ -82,8 +88,32 @@ namespace PSEGet3.ViewModel
             ////{
             ////    // Create run time view models
             ////}
-            //_sp = ServiceProviderBase.Instance;            
-            CreateMain();
+            //_sp = ServiceProviderBase.Instance; 
+
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+
+            SimpleIoc.Default.Register<IPdfService, PdfTextSharpService>();
+            SimpleIoc.Default.Register<IPSEGetDataService, PSEGetDataService>();
+            SimpleIoc.Default.Register<IReportDownloader, ReportDownloader>();
+            SimpleIoc.Default.Register<IAmibrokerService, AmibrokerService>();
+
+            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ConverterViewModel>();
+            SimpleIoc.Default.Register<ConvertFromFileViewModel>();
+            SimpleIoc.Default.Register<DownloadAndConvertViewModel>();
+            //SimpleIoc.Default.Register<DownloadHistoricalDataViewModel>();
+            SimpleIoc.Default.Register<OutputSettingsViewModel>();
+            SimpleIoc.Default.Register<MarketSummaryViewModel>();
+            SimpleIoc.Default.Register<MessageWindowViewModel>();
+            SimpleIoc.Default.Register<MarketActivityViewModel>();
+            SimpleIoc.Default.Register<ProgressDialogViewModel>();
+
+            ViewModelLocator.DownloadAndConvertVMStatic.FromDate = DateTime.Today;
+            ViewModelLocator.DownloadAndConvertVMStatic.ToDate = DateTime.Today;
+            ViewModelLocator.ConverterVMStatic.DataConvertMethod = ViewModelLocator.OutputSettingsVMStatic.DataConvertMethod;
+            ViewModelLocator.ConverterVMStatic.IsBusy = false;
+
+            //CreateMain();
         }
 
         /// <summary>
@@ -93,12 +123,12 @@ namespace PSEGet3.ViewModel
         {
             get
             {
-                if (_main == null)
-                {
-                    CreateMain();
-                }
+                //if (_main == null)
+                //{
+                //    CreateMain();
+                //}
 
-                return _main;
+                return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
 
@@ -106,12 +136,13 @@ namespace PSEGet3.ViewModel
         {
             get
             {
-                if (_converterViewModel == null)
-                {
-                    CreateConverterViewModel();
-                }
+                //if (_converterViewModel == null)
+                //{
+                //    CreateConverterViewModel();
+                //}
 
-                return _converterViewModel;
+                //return _converterViewModel;
+                return ServiceLocator.Current.GetInstance<ConverterViewModel>();
             }
         }
 
@@ -119,12 +150,14 @@ namespace PSEGet3.ViewModel
         {
             get
             {
-                if (_convertFromFileViewModel == null)
-                {
-                    CreateConvertFromFileViewModel();
-                }
+                //if (_convertFromFileViewModel == null)
+                //{
+                //    CreateConvertFromFileViewModel();
+                //}
 
-                return _convertFromFileViewModel;
+                //return _convertFromFileViewModel;
+
+                return ServiceLocator.Current.GetInstance<ConvertFromFileViewModel>();
             }
         }
 
@@ -132,35 +165,38 @@ namespace PSEGet3.ViewModel
         {
             get
             {
-                if (_downloadAndConvertViewModel == null)
-                {
-                    CreateDownloadAndConvertViewModel();
-                }
-                return _downloadAndConvertViewModel;
+                //if (_downloadAndConvertViewModel == null)
+                //{
+                //    CreateDownloadAndConvertViewModel();
+                //}
+                //return _downloadAndConvertViewModel;
+                return ServiceLocator.Current.GetInstance<DownloadAndConvertViewModel>();
             }
         }
 
-        public static DownloadHistoricalDataViewModel DownloadHistoricalDataVMStatic
-        {
-            get
-            {
-                if (_downloadHistoricalViewModel == null)
-                {
-                    CreateDownloadHistoricalDataViewModel();
-                }
-                return _downloadHistoricalViewModel;
-            }
-        }
+        //public static DownloadHistoricalDataViewModel DownloadHistoricalDataVMStatic
+        //{
+        //    get
+        //    {
+        //        //if (_downloadHistoricalViewModel == null)
+        //        //{
+        //        //    CreateDownloadHistoricalDataViewModel();
+        //        //}
+        //        //return _downloadHistoricalViewModel;
+        //        return ServiceLocator.Current.GetInstance<DownloadHi>
+        //    }
+        //}
 
         public static OutputSettingsViewModel OutputSettingsVMStatic
         {
             get
             {
-                if (_outputSettingsViewModel == null)
-                {
-                    CreateOutputSettingsViewModel();
-                }
-                return _outputSettingsViewModel;
+                //if (_outputSettingsViewModel == null)
+                //{
+                //    CreateOutputSettingsViewModel();
+                //}
+                //return _outputSettingsViewModel;
+                return ServiceLocator.Current.GetInstance<OutputSettingsViewModel>();
             }
         }
 
@@ -168,11 +204,12 @@ namespace PSEGet3.ViewModel
         {
             get
             {
-                if (_marketSummaryViewModel == null)
-                {
-                    CreateMarketSummaryViewModel();
-                }
-                return _marketSummaryViewModel;
+                //if (_marketSummaryViewModel == null)
+                //{
+                //    CreateMarketSummaryViewModel();
+                //}
+                //return _marketSummaryViewModel;
+                return ServiceLocator.Current.GetInstance<MarketSummaryViewModel>();
             }
         }
 
@@ -180,11 +217,12 @@ namespace PSEGet3.ViewModel
         {
             get
             {
-                if (_errorWindowViewModel == null)
-                {
-                    CreateErrorWindowViewModel();
-                }
-                return _errorWindowViewModel;
+                //if (_errorWindowViewModel == null)
+                //{
+                //    CreateErrorWindowViewModel();
+                //}
+                //return _errorWindowViewModel;
+                return ServiceLocator.Current.GetInstance<MessageWindowViewModel>();
             }
         }
 
@@ -192,11 +230,12 @@ namespace PSEGet3.ViewModel
         {
             get
             {
-                if (_marketActivityViewModel == null)
-                {
-                    CreateMarketActivityViewModel();
-                }
-                return _marketActivityViewModel;
+                //if (_marketActivityViewModel == null)
+                //{
+                //    CreateMarketActivityViewModel();
+                //}
+                //return _marketActivityViewModel;
+                return ServiceLocator.Current.GetInstance<MarketActivityViewModel>();
             }
         }
 
@@ -204,11 +243,12 @@ namespace PSEGet3.ViewModel
         {
             get
             {
-                if (_progressDialogViewModel == null)
-                {
-                    CreateProgressDialogViewModel();
-                }
-                return _progressDialogViewModel;
+                //if (_progressDialogViewModel == null)
+                //{
+                //    CreateProgressDialogViewModel();
+                //}
+                //return _progressDialogViewModel;
+                return ServiceLocator.Current.GetInstance<ProgressDialogViewModel>();
             }
         }
 
@@ -249,10 +289,10 @@ namespace PSEGet3.ViewModel
             get { return DownloadAndConvertVMStatic; }
         }
 
-        public DownloadHistoricalDataViewModel DownloadHistoricalDataVM
-        {
-            get { return DownloadHistoricalDataVMStatic; }
-        }
+        //public DownloadHistoricalDataViewModel DownloadHistoricalDataVM
+        //{
+        //    get { return DownloadHistoricalDataVMStatic; }
+        //}
 
         public OutputSettingsViewModel OutputSettingsVM
         {
@@ -269,102 +309,102 @@ namespace PSEGet3.ViewModel
             get { return ProgressDialogVMStatic; }
         }
 
-        public static void CreateProgressDialogViewModel()
-        {
-            if (_progressDialogViewModel == null)
-            {
-                _progressDialogViewModel = new ProgressDialogViewModel();
-            }
-        }
+        //public static void CreateProgressDialogViewModel()
+        //{
+        //    if (_progressDialogViewModel == null)
+        //    {
+        //        _progressDialogViewModel = new ProgressDialogViewModel();
+        //    }
+        //}
 
-        public static void CreateMarketActivityViewModel()
-        {
-            if (_marketActivityViewModel == null)
-            {
-                _marketActivityViewModel = new MarketActivityViewModel();
-            }
-        }
+        //public static void CreateMarketActivityViewModel()
+        //{
+        //    if (_marketActivityViewModel == null)
+        //    {
+        //        _marketActivityViewModel = new MarketActivityViewModel();
+        //    }
+        //}
 
-        public static void CreateErrorWindowViewModel()
-        {
-            if (_errorWindowViewModel == null)
-            {
-                _errorWindowViewModel = new MessageWindowViewModel();
-            }
-        }
+        //public static void CreateErrorWindowViewModel()
+        //{
+        //    if (_errorWindowViewModel == null)
+        //    {
+        //        _errorWindowViewModel = new MessageWindowViewModel();
+        //    }
+        //}
 
-        public static void CreateMarketSummaryViewModel()
-        {
-            if (_marketSummaryViewModel == null)
-            {
-                _marketSummaryViewModel = new MarketSummaryViewModel();
-            }
-        }
+        //public static void CreateMarketSummaryViewModel()
+        //{
+        //    if (_marketSummaryViewModel == null)
+        //    {
+        //        _marketSummaryViewModel = new MarketSummaryViewModel();
+        //    }
+        //}
 
-        public static void CreateOutputSettingsViewModel()
-        {
-            if (_outputSettingsViewModel == null)
-            {
-                _outputSettingsViewModel = new OutputSettingsViewModel();
-            }
-        }
+        //public static void CreateOutputSettingsViewModel()
+        //{
+        //    if (_outputSettingsViewModel == null)
+        //    {
+        //        _outputSettingsViewModel = new OutputSettingsViewModel();
+        //    }
+        //}
 
-        public static void CreateDownloadHistoricalDataViewModel()
-        {
-            if (_downloadHistoricalViewModel == null)
-            {
-                _downloadHistoricalViewModel = new DownloadHistoricalDataViewModel();
-            }
-        }
+        //public static void CreateDownloadHistoricalDataViewModel()
+        //{
+        //    if (_downloadHistoricalViewModel == null)
+        //    {
+        //        _downloadHistoricalViewModel = new DownloadHistoricalDataViewModel();
+        //    }
+        //}
 
-        public static void CreateDownloadAndConvertViewModel()
-        {
-            if (_downloadAndConvertViewModel == null)
-            {
-                _downloadAndConvertViewModel = new DownloadAndConvertViewModel();
-                _downloadAndConvertViewModel.FromDate = DateTime.Today;
-                _downloadAndConvertViewModel.ToDate = DateTime.Today;
-            }
-        }
+        //public static void CreateDownloadAndConvertViewModel()
+        //{
+        //    if (_downloadAndConvertViewModel == null)
+        //    {
+        //        _downloadAndConvertViewModel = new DownloadAndConvertViewModel();
+        //        _downloadAndConvertViewModel.FromDate = DateTime.Today;
+        //        _downloadAndConvertViewModel.ToDate = DateTime.Today;
+        //    }
+        //}
 
-        public static void CreateConvertFromFileViewModel()
-        {
-            if (_convertFromFileViewModel == null)
-            {
-                _convertFromFileViewModel = new ConvertFromFileViewModel();
-            }
-        }
+        //public static void CreateConvertFromFileViewModel()
+        //{
+        //    if (_convertFromFileViewModel == null)
+        //    {
+        //        _convertFromFileViewModel = new ConvertFromFileViewModel();
+        //    }
+        //}
 
-        public static void CreateConverterViewModel()
-        {
-            if (_converterViewModel == null)
-            {
-                _converterViewModel = new ConverterViewModel();
-                _converterViewModel.DataConvertMethod = OutputSettingsVMStatic.DataConvertMethod;
-                    // ConvertMethod.DownloadAndConvert;
-                _converterViewModel.IsBusy = false;
-            }
-        }
+        //public static void CreateConverterViewModel()
+        //{
+        //    if (_converterViewModel == null)
+        //    {
+        //        _converterViewModel = new ConverterViewModel();
+        //        _converterViewModel.DataConvertMethod = OutputSettingsVMStatic.DataConvertMethod;
+        //            // ConvertMethod.DownloadAndConvert;
+        //        _converterViewModel.IsBusy = false;
+        //    }
+        //}
 
         /// <summary>
         ///     Provides a deterministic way to delete the Main property.
         /// </summary>
         public static void ClearMain()
         {
-            _main.Cleanup();
-            _main = null;
+            //_main.Cleanup();
+            //_main = null;
         }
 
         /// <summary>
         ///     Provides a deterministic way to create the Main property.
         /// </summary>
-        public static void CreateMain()
-        {
-            if (_main == null)
-            {
-                _main = new MainViewModel();
-            }
-        }
+        //public static void CreateMain()
+        //{
+        //    if (_main == null)
+        //    {
+        //        _main = new MainViewModel();
+        //    }
+        //}
 
         /// <summary>
         ///     Cleans up all the resources.

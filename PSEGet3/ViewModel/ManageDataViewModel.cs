@@ -59,8 +59,7 @@ namespace PSEGet3.ViewModel
             var dataService = new PSEGetDataService();
             dataService.PurgeData(_purgeDate);
             Messenger.Default.Send<ShowAppMessage, MainWindow>(
-                new ShowAppMessage {AppMessage = "Done Purging!"}
-                );
+                new ShowAppMessage {AppMessage = "Done Purging!"});
         }
 
 

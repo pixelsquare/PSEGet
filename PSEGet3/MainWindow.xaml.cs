@@ -105,8 +105,7 @@ namespace PSEGet3
         private void MainWindow_LocationChanged(object sender, EventArgs e)
         {
             Messenger.Default.Send(
-                new SetWindowPositionMessage {Left = Left + Width + 6, Top = Top}
-                );
+                new SetWindowPositionMessage {Left = Left + Width + 6, Top = Top});
         }
     }
 }

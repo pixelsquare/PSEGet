@@ -108,7 +108,7 @@ namespace PSEGetTest
         [TestMethod]
         public void TestStringCollection_IndexOfString()
         {
-            StringCollection sc = new StringCollection();
+            var sc = new StringCollection();
             sc.Add("Hello World!");
             sc.Add("Kamusta na ba?");
             sc.Add("Talaga lang ha");
@@ -583,9 +583,9 @@ namespace PSEGetTest
         public void TestReader_SectorSummary()
         {
             PDFTextStripper stripper = new PDFTextStripper();
-            PSEReportReader reader = new PSEReportReader(stripper.getText(doc).TrimEnd());
+            var reader = new PSEReportReader(stripper.getText(doc).TrimEnd());
 
-            PSEDocument pd = new PSEDocument();
+            var pd = new PSEDocument();
             reader.Fill(pd);
             
             // psei

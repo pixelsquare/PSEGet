@@ -99,7 +99,7 @@ namespace PSEGetLib
                         throw new Exception("Unable to find file to convert.");
 
                     BeforeConvertCallback(downloadedFile.Filename);
-                    document = Helpers.ConvertReportFile(downloadedFile.Filename, DownloadAndConvertHelper._outputSettings);
+                    document = Helpers.LoadFromReportFile(downloadedFile.Filename, DownloadAndConvertHelper._outputSettings);
                     downloadedFile.Converted = true;
                     ConvertCompleteCallback(downloader, document);
                 }

@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Windows.Data;
 using PSEGetLib;
+using PSEGetLib.Interfaces;
+using Microsoft.Practices.ServiceLocation;
 
 namespace PSEGet3.View.ValueConverters
 {
@@ -14,7 +16,9 @@ namespace PSEGet3.View.ValueConverters
             string checkValue = value.ToString();
             string targetValue = parameter.ToString();
             bool result = checkValue.Equals(targetValue, StringComparison.InvariantCultureIgnoreCase);
-            if (checkValue == "Amibroker" && !Helpers.IsAmibrokerInstalled())
+
+            var amibrokerService = ServiceLocator.Current.GetInstance<IAmibrokerService>();
+            if (checkValue == "Amibroker" && !amibrokerService.IsAmibrokerInstalled())
                 result = false;
             return result;
         }

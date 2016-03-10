@@ -12,6 +12,8 @@ using PSEGet3.Messages;
 using PSEGetLib;
 using PSEGetLib.Configuration;
 using PSEGetLib.Converters;
+using PSEGetLib.Interfaces;
+using Microsoft.Practices.ServiceLocation;
 
 namespace PSEGet3.ViewModel
 {
@@ -260,7 +262,8 @@ namespace PSEGet3.ViewModel
             {
                 //if (this._outputTo == value)
                 //    return;
-                if (value == OutputTo.Amibroker && !Helpers.IsAmibrokerInstalled())
+                IAmibrokerService amibrokerService = ServiceLocator.Current.GetInstance<IAmibrokerService>();
+                if (value == OutputTo.Amibroker && !amibrokerService.IsAmibrokerInstalled())
                     return;
                 _outputTo = value;
                 RaisePropertyChanged("OutputTo");

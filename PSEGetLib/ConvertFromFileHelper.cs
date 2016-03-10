@@ -34,7 +34,7 @@ namespace PSEGetLib
                     if (convertFromFilesParams.BeforeConvertCallback != null)
                         convertFromFilesParams.BeforeConvertCallback(reportFile);
 
-                    pseDocument = Helpers.ConvertReportFile(reportFile, convertFromFilesParams.OutputSettings);
+                    pseDocument = Helpers.LoadFromReportFile(reportFile, convertFromFilesParams.OutputSettings);
 
                     if (convertFromFilesParams.ProgressCallback != null)
                         convertFromFilesParams.ProgressCallback(reportFile, pseDocument);                    

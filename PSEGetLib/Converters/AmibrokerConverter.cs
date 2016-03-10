@@ -12,26 +12,28 @@ namespace PSEGetLib.Converters
         {
         }
 
-        public AmibrokerConverter(PSEDocument pseDocument, AmiOutputSettings outputSettings)
+        //public AmibrokerConverter(PSEDocument pseDocument, AmiOutputSettings outputSettings)
+        //{
+        //    this.PSEDocument = pseDocument;
+        //    this.OutputSettings = outputSettings;
+        //}
+
+        private PSEDocument PSEDocument
+        {
+            get;
+            set;
+        }
+
+        private AmiOutputSettings OutputSettings
+        {
+            get;
+            set;
+        }
+
+        public void Execute(PSEDocument pseDocument, AmiOutputSettings outputSettings)
         {
             this.PSEDocument = pseDocument;
             this.OutputSettings = outputSettings;
-        }
-
-        public PSEDocument PSEDocument
-        {
-            get;
-            set;
-        }
-
-        public AmiOutputSettings OutputSettings
-        {
-            get;
-            set;
-        }
-
-        public void Execute()
-        {
             this.DoExecute();     
         }
 

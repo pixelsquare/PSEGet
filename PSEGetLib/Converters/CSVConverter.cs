@@ -13,65 +13,49 @@ namespace PSEGetLib.Converters
         {
         }
 
-        public CSVConverter(PSEDocument pseDocument, CSVOutputSettings outputSettings)
-        {
-            _pseDocument = pseDocument;
-            _outputSettings = outputSettings;
-        }
+        //public CSVConverter(PSEDocument pseDocument, CSVOutputSettings outputSettings)
+        //{
+        //    _pseDocument = pseDocument;
+        //    _outputSettings = outputSettings;
+        //}
 
-        private PSEDocument _pseDocument;
-        public PSEDocument PSEDocument
+        private PSEDocument PSEDocument
         {
-            get
-            {
-                return _pseDocument;
-            }
-            set
-            {
-                _pseDocument = value;
-            }
+            get; set;
         }
-
-        private CSVOutputSettings _outputSettings;
-        public CSVOutputSettings OutputSettings
+        
+        private CSVOutputSettings OutputSettings
         {
-            get
-            {
-                return _outputSettings;
-            }
-            set
-            {
-                _outputSettings = value;
-            }
+            get; set;
         }
 
         private string getTradeDate()
         {
-            DateTime result = new DateTime(_pseDocument.TradeDate.Year, 
-                                            _pseDocument.TradeDate.Month,
-                                            _pseDocument.TradeDate.Day);
+            DateTime result = new DateTime(this.PSEDocument.TradeDate.Year,
+                                            this.PSEDocument.TradeDate.Month,
+                                            this.PSEDocument.TradeDate.Day);
 
-            return result.ToString(_outputSettings.DateFormat);
+            return result.ToString(this.OutputSettings.DateFormat);
         }
 
         protected void DoExecute()
         {
             //Debug.WriteLine(csvOutputSettings.ToString());
-            if (!Directory.Exists( _outputSettings.OutputDirectory))
-                throw new DirectoryNotFoundException(_outputSettings.OutputDirectory + " does not exist");
+            if (!Directory.Exists( this.OutputSettings.OutputDirectory))
+                throw new DirectoryNotFoundException(this.OutputSettings.OutputDirectory + " does not exist");
 
             List<string> csvOutput = new List<string>();
 
             string tradeDate = getTradeDate(); //this._pseDocument.TradeDate.ToString(this._outputSettings.DateFormat);
-            string csvFormat = _outputSettings.CSVFormat.Replace(CSVOutputSettings.DATE_SYMBOL, tradeDate);
-			csvFormat = csvFormat.Replace(",", _outputSettings.Delimiter);
+            string csvFormat = this.OutputSettings.CSVFormat.Replace(CSVOutputSettings.DATE_SYMBOL, tradeDate);
+			csvFormat = csvFormat.Replace(",", this.OutputSettings.Delimiter);
 
-            foreach (SectorItem sectorItem in _pseDocument.Sectors)
+            foreach (SectorItem sectorItem in this.PSEDocument.Sectors)
             {
                 // sectors
                 //sectorItem.Volume = sectorItem.Volume / csvOutputSettings.SectorVolumeDivider;
                 if (sectorItem.Open > 0)
-                    csvOutput.Add(getCSVLine(csvFormat, sectorItem, _outputSettings));
+                    csvOutput.Add(getCSVLine(csvFormat, sectorItem, this.OutputSettings));
 
                 //sub sectors
                 foreach (SubSectorItem subsectorItem in sectorItem.SubSectors)
@@ -81,7 +65,7 @@ namespace PSEGetLib.Converters
                     {
                         if (stockItem.Open > 0)
                         {
-                            csvOutput.Add(getCSVLine(csvFormat, stockItem, _outputSettings));
+                            csvOutput.Add(getCSVLine(csvFormat, stockItem, this.OutputSettings));
                         }
                     }
                 }
@@ -93,8 +77,8 @@ namespace PSEGetLib.Converters
         protected void WriteToFile(IEnumerable<string> csvLines)
         {
             // write to file
-            string filename = _outputSettings.OutputDirectory + Helpers.GetDirectorySeparator() +
-                                    _outputSettings.Filename;
+            string filename = this.OutputSettings.OutputDirectory + Helpers.GetDirectorySeparator() +
+                                    this.OutputSettings.Filename;
 
             using (StreamWriter writer = new StreamWriter(filename))
             {
@@ -114,8 +98,10 @@ namespace PSEGetLib.Converters
             
         }
 
-        public void Execute()
-        {
+        public void Execute(PSEDocument pseDocument, CSVOutputSettings csvOutputSettings)
+        {   
+            this.PSEDocument = PSEDocument;
+            this.OutputSettings = csvOutputSettings;            
             DoExecute();
         }
 
@@ -129,7 +115,7 @@ namespace PSEGetLib.Converters
             {                
                 // scale down nfb and volume for sectors
                // stockValue = Math.Truncate(stockBase.Value / this._outputSettings.SectorVolumeDivider); 
-                netForeignBuy = Math.Truncate(stockBase.NetForeignBuy / _outputSettings.SectorVolumeDivider);
+                netForeignBuy = Math.Truncate(stockBase.NetForeignBuy / this.OutputSettings.SectorVolumeDivider);
                 
                 // index value as volume
                 double volume;
