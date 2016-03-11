@@ -94,7 +94,7 @@ namespace PSEGet3.ViewModel
 
             SimpleIoc.Default.Register<IPdfService, PdfTextSharpService>();
             SimpleIoc.Default.Register<IPSEGetDataService, PSEGetDataService>();
-            SimpleIoc.Default.Register<IReportDownloader, ReportDownloader>();
+            //SimpleIoc.Default.Register<IReportDownloader, ReportDownloader>();
             SimpleIoc.Default.Register<IAmibrokerService, AmibrokerService>();
 
             SimpleIoc.Default.Register<MainViewModel>();

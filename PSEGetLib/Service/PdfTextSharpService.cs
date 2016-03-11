@@ -2,6 +2,7 @@
 using PSEGetLib.Interfaces;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
+using System.Text;
 
 namespace PSEGetLib.Service
 {
@@ -11,7 +12,7 @@ namespace PSEGetLib.Service
         {
             ITextExtractionStrategy its = new iTextSharp.text.pdf.parser.SimpleTextExtractionStrategy();
 
-            using (PdfReader reader = new PdfReader(path))
+            using (PdfReader reader = new PdfReader(filePath))
             {
                 StringBuilder text = new StringBuilder();
 

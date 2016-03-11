@@ -42,7 +42,7 @@ namespace PSEGetLib.Converters
                 return string.Format("-f \"{0}\" -r r -t -o \"{1}\" --ignoreOpenInterest=no --quite", MetaAsciiFile, OutputSettings.OutputDirectory);
         }
 
-        public void Execute()
+        public void Execute(PSEDocument pseDocument, MetaOutputSettings outputSettings)
         {
             string asc2msPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\asc2ms.exe";
             string convertParam = getConvertParams();

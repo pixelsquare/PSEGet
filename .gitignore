@@ -1,12 +1,3 @@
-Library/ikvm-7.2.4630.5/LICENSE
-Library/ikvm-7.2.4630.5/THIRD_PARTY_README
-Library/ikvm-7.2.4630.5/TRADEMARK
-Library/ikvm-7.2.4630.5/bin-x64/README
-Library/ikvm-7.2.4630.5/bin-x86/README
-Library/ikvm-7.2.4630.5/bin/ikvm.exe.config
-Library/ikvm-7.2.4630.5/bin/ikvmc.exe.config
-Library/ikvm-7.2.4630.5/bin/ikvmstub.exe.config
-Library/ikvm-7.2.4630.5/lib/ikvm-api.jar
 Mac/PSEGet/MacPSEGet.pidb
 Mac/PSEGet/PSEGet.pidb
 Mac/PSEGet/PSEGet.tar.gz
@@ -23,3 +14,5 @@ PSEGetLibWindows/bin/
 PSEGetLibWindows/obj/
 PSEGetTest/obj/
 packages/
+PSEGetTest/bin/
+Release/

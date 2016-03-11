@@ -550,9 +550,9 @@ namespace PSEGet3.ViewModel
 
                 case ConvertMethod.DownloadHistoricalData:
                     // send a message to DownloadHistoricalDataViewModel                                                
-                    Messenger.Default.Send<GetConvertParamMessage, DownloadHistoricalDataViewModel>(
-                        new GetConvertParamMessage()
-                        );
+                    //Messenger.Default.Send<GetConvertParamMessage, DownloadHistoricalDataViewModel>(
+                    //    new GetConvertParamMessage()
+                    //    );
 
                     break;
             }

@@ -9,7 +9,7 @@
     xmlns:lib="clr-namespace:PSEGetLib.Configuration;assembly=PSEGetLib"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-    xmlns:gi="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
+    xmlns:gi="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
     x:Class="PSEGet3.View.ConverterView"
     mc:Ignorable="d"
     DataContext="{Binding ConverterVM, Source={StaticResource Locator}}">

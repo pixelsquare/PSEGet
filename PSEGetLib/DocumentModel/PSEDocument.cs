@@ -60,14 +60,14 @@ namespace PSEGetLib.DocumentModel
 
         public void ToCSV(CSVOutputSettings csvOutputSettings)
         {
-            var converter = new CSVConverter(this, csvOutputSettings);
-            converter.Execute();
+            var converter = new CSVConverter();
+            converter.Execute(this, csvOutputSettings);
         }
 
         public void ToAmibroker(AmiOutputSettings amiOutputSettings)
         {
-            var converter = new AmibrokerConverter(this, amiOutputSettings);
-            converter.Execute();
+            var converter = new AmibrokerConverter();
+            converter.Execute(this, amiOutputSettings);
         }
 
         public void ToMetaStock(MetaOutputSettings metaOutputSettings)
@@ -81,12 +81,12 @@ namespace PSEGetLib.DocumentModel
             csvOutputSettings.OutputDirectory = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             csvOutputSettings.UseSectorValueAsVolume = metaOutputSettings.UseSectorValueAsVolume;
             
-            CSVConverter csvConverter = new CSVConverter(this, csvOutputSettings);
-            csvConverter.Execute();
+            CSVConverter csvConverter = new CSVConverter();
+            csvConverter.Execute(this, csvOutputSettings);
 
             string csvFile = csvOutputSettings.OutputDirectory + "\\" + csvOutputSettings.Filename; 
             MetastockConverter converter = new MetastockConverter(this, csvFile, metaOutputSettings);
-            converter.Execute();
+            converter.Execute(this, metaOutputSettings);
         }
 
         private void InitSectors()
