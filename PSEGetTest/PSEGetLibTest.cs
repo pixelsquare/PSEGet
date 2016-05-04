@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PSEGetLib;
-using org.apache.pdfbox.pdmodel;
-using org.apache.pdfbox.util;
+//using org.apache.pdfbox.pdmodel;
+//using org.apache.pdfbox.util;
 using System.Collections.Specialized;
 using PSEGetLib.DocumentModel;
 using PSEGetLib.Converters;
+using PSEGetLib.Service;
+using PSEGetLib.Interfaces;
 
 namespace PSEGetTest
 {
@@ -16,14 +18,15 @@ namespace PSEGetTest
     [TestClass]
     public class ReportReaderTest
     {
-        private PDDocument doc;        
+        //private PDDocument doc;        
+        private string pdfDocPath = @"C:\Users\Arnold\Documents\Projects\PSEGet3\trunk\PSEGetTest\stockQuotes_09202010.pdf";
 
         public ReportReaderTest()
         {
             //
             // TODO: Add constructor logic here
             //            
-            doc = PDDocument.load(@"C:\Users\Arnold\Documents\Projects\PSEGet3\trunk\PSEGetTest\stockQuotes_09202010.pdf");
+            //doc = PDDocument.load(@"C:\Users\Arnold\Documents\Projects\PSEGet3\trunk\PSEGetTest\stockQuotes_09202010.pdf");
         }
 
         private TestContext testContextInstance;
@@ -69,10 +72,11 @@ namespace PSEGetTest
         [TestMethod]
         public void TestReaderFirstLine()
         {
-                        
-            PDFTextStripper stripper = new PDFTextStripper();
 
-            PSEReportReader reader = new PSEReportReader(stripper.getText(doc));
+            //PDFTextStripper stripper = new PDFTextStripper();
+            var pdfSharpService = new PdfTextSharpService();
+
+            PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
 
             string expected = "The Philippine Stock Exchange, Inc";
             string actual = reader.PSEReportString[0].Trim();
@@ -82,8 +86,9 @@ namespace PSEGetTest
         [TestMethod]
         public void TestReaderLastLine()
         {
-            PDFTextStripper stripper = new PDFTextStripper();
-            PSEReportReader reader = new PSEReportReader(stripper.getText(doc).TrimEnd());
+            //PDFTextStripper stripper = new PDFTextStripper();
+            var pdfSharpService = new PdfTextSharpService();
+            PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
 
             string expected = "*** Grand total includes main,oddlot and block sale transactions";
             string actual = reader.PSEReportString[reader.PSEReportString.Count - 1].Trim();
@@ -93,8 +98,9 @@ namespace PSEGetTest
         [TestMethod]
         public void TestReaderFill_TradDate()
         {
-            PDFTextStripper stripper = new PDFTextStripper();
-            PSEReportReader reader = new PSEReportReader(stripper.getText(doc).TrimEnd());
+            //PDFTextStripper stripper = new PDFTextStripper();
+            var pdfSharpService = new PdfTextSharpService();
+            PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
 
             PSEDocument pd = new PSEDocument();
             reader.Fill(pd);
@@ -225,8 +231,9 @@ namespace PSEGetTest
         [TestMethod]
         public void TestReader_ReportBody()
         {
-            PDFTextStripper stripper = new PDFTextStripper();
-            PSEReportReader reader = new PSEReportReader(stripper.getText(doc).TrimEnd());
+            //PDFTextStripper stripper = new PDFTextStripper();
+            var pdfSharpService = new PdfTextSharpService();
+            PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
 
             PSEDocument pd = new PSEDocument();
             reader.Fill(pd);
@@ -582,8 +589,9 @@ namespace PSEGetTest
         [TestMethod]
         public void TestReader_SectorSummary()
         {
-            PDFTextStripper stripper = new PDFTextStripper();
-            var reader = new PSEReportReader(stripper.getText(doc).TrimEnd());
+            //PDFTextStripper stripper = new PDFTextStripper();
+            IPdfService pdfService = new PdfTextSharpService();
+            var reader = new PSEReportReader(pdfService.ExtractTextFromPdf(pdfDocPath));
 
             var pd = new PSEDocument();
             reader.Fill(pd);

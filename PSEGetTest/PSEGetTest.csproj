@@ -85,6 +85,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Arnold\Documents\Projects\DotNetLib\IKVM\ikvm-7.2.4630.5\bin\IKVM.OpenJDK.SwingAWT.dll</HintPath>
     </Reference>
+    <Reference Include="LateBindingHelper">
+      <HintPath>..\ExternalLib\LateBindingHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="pdfbox-1.6.0, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -101,7 +104,6 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PSEGetLibTest11062013.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PSEGetLibTest.cs" />
   </ItemGroup>

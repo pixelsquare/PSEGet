@@ -169,7 +169,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="TreeMaps">
-      <HintPath>..\Library\TreeMaps.dll</HintPath>
+      <HintPath>..\ExternalLib\TreeMaps.dll</HintPath>
     </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
@@ -414,9 +414,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y "C:\Users\Arnold\Documents\Projects\PSEGet3\trunk\PSEGet3\Misc\*.*" "$(ProjectDir)$(OutDir)"
+    <PostBuildEvent>xcopy /y "$(ProjectDir)\Misc\*.*" "$(ProjectDir)$(OutDir)"
 
-xcopy /y "C:\Users\Arnold\Documents\Projects\PSEGet3\trunk\Msvcr\msvcr110.dll" "$(ProjectDir)$(OutDir)"
+xcopy /y "$(ProjectDir)\Msvcr\msvcr110.dll" "$(ProjectDir)$(OutDir)"
 
 xcopy /y "C:\Users\Arnold\Documents\Projects\DotNetLib\Sqlite\x64\SQLite.Interop.dll" "$(ProjectDir)$(OutDir)"
 

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using org.apache.pdfbox.pdmodel;
-using org.apache.pdfbox.util;
+//using org.apache.pdfbox.pdmodel;
+//using org.apache.pdfbox.util;
 using PSEGetLib;
 using PSEGetLib.Converters;
 using PSEGetLib.DocumentModel;
