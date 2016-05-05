@@ -46,7 +46,8 @@ namespace PSEGetLib
         private void ReadPSEReportFile(string pseReportString)
         {
             this._pseReportString.Clear();
-            this._pseReportString.AddRange(pseReportString.Split('\n'));
+            string[] lines = pseReportString.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            this._pseReportString.AddRange(lines);
 			
 			List<string> tmp = new List<string>();
 			tmp.AddRange(this._pseReportString.ToArray());
@@ -100,17 +101,14 @@ namespace PSEGetLib
         /// Removes the quotation report header
         /// </summary>
         private void RemoveHeader()
-        {
-						// get to the first sector
-			//while(!this._pseReportString[0].Contains(sectorNameMap[PSEDocument.FINANCIAL]))
-			//	this._pseReportString.RemoveAt(0);                       
+        {                    
             string headerStr = "The Philippine Stock Exchange, Inc";           
             while (this._pseReportString.IndexOf(headerStr) > -1)
             {
                 int index = this._pseReportString.IndexOf(headerStr);
                 if (DateTime.Compare(_tradeDate, _reportChangeDate1) < 0)
                 {
-                    while (this._pseReportString[index] != "Buying (Selling)")
+                    while (this._pseReportString[index] != "Buying (Selling)")                    
                     {
                         this._pseReportString.RemoveAt(index);
                     }
@@ -123,7 +121,7 @@ namespace PSEGetLib
                     int endIndex = this._pseReportString.IndexOf("Buying/(Selling),");
                     int removeCount = (endIndex - startIndex) + 1;
                     this._pseReportString.RemoveRange(startIndex, removeCount);
-                    if (this._pseReportString[index] == "Php")
+                    if (this._pseReportString[index].Contains("Php Php"))
                         this._pseReportString.RemoveAt(index); // Php text
                 }
             }
@@ -248,12 +246,14 @@ namespace PSEGetLib
             // CROWN bug
             if (DateTime.Compare(this._tradeDate, new DateTime(2015, 6, 22)) >= 0)
             {
-                var crownIndex = this._pseReportString.IndexOf("CROWN ASIA CROW");
-                if (crownIndex > -1 && this._pseReportString[crownIndex + 1] == "N")
+                var crownIndex = this._pseReportString.IndexOf("N");
+                if (crownIndex > -1 /*&& this._pseReportString[crownIndex + 1] == "N"*/)
                 {
-                    this._pseReportString[crownIndex] = this._pseReportString[crownIndex] + this._pseReportString[crownIndex + 1] + " " + this._pseReportString[crownIndex + 2];
-                    this._pseReportString.RemoveAt(crownIndex + 1);
-                    this._pseReportString.RemoveAt(crownIndex + 1);
+                    this.PSEReportString[crownIndex - 1].Replace("CROWN ASIA CROW", "CROWN ASIA CROWN");
+                    this._pseReportString.RemoveAt(crownIndex);                    
+                    //this._pseReportString[crownIndex] = this._pseReportString[crownIndex] + this._pseReportString[crownIndex + 1] + " " + this._pseReportString[crownIndex + 2];
+                    //this._pseReportString.RemoveAt(crownIndex + 1);
+                    //this._pseReportString.RemoveAt(crownIndex + 1);
                 }
             }
 

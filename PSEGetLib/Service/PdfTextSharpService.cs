@@ -14,11 +14,11 @@ namespace PSEGetLib.Service
 
             using (PdfReader reader = new PdfReader(filePath))
             {
-                StringBuilder text = new StringBuilder();
+                var text = new StringBuilder();
 
                 for (int i = 1; i <= reader.NumberOfPages; i++)
                 {
-                    string thePage = PdfTextExtractor.GetTextFromPage(reader, i, its);
+                    string thePage = PdfTextExtractor.GetTextFromPage(reader, i);
                     string[] theLines = thePage.Split('\n');
                     foreach (var theLine in theLines)
                     {

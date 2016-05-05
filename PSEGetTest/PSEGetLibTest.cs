@@ -19,7 +19,7 @@ namespace PSEGetTest
     public class ReportReaderTest
     {
         //private PDDocument doc;        
-        private string pdfDocPath = @"C:\Users\Arnold\Documents\Projects\PSEGet3\trunk\PSEGetTest\stockQuotes_09202010.pdf";
+        private string pdfDocPath = @"C:\Users\arnolddiaz\Downloads\stockQuotes_05052016.pdf";
 
         public ReportReaderTest()
         {
@@ -105,7 +105,7 @@ namespace PSEGetTest
             PSEDocument pd = new PSEDocument();
             reader.Fill(pd);
 
-            DateTime expected = DateTime.Parse("09/20/2010");
+            DateTime expected = DateTime.Parse("05/05/2016");
             DateTime actual = pd.TradeDate;
 
             Assert.AreEqual(expected, actual);
@@ -240,30 +240,30 @@ namespace PSEGetTest
 
             //Bid Ask Open High Low Close Volume Value NFB/S
 
-            //METROBANK                MBT     74.2 74.75 71.2 74.75 71.05 74.75 3,098,980 226,992,448.5 4,289,723
+            //METROBANK MBT 78.75 78.8 78.95 79.1 78.55 78.8 2,050,170 161,601,172 7,609,520
 
             StockItem stock = pd.GetStock("MBT");
-            double expected = 74.2;
+            double expected = 78.75;
             double actual = stock.Bid;
             Assert.AreEqual(expected, actual);
 
-            expected = 71.2;
+            expected = 78.95;
             actual = stock.Open;
             Assert.AreEqual(expected, actual);
 
-            expected = 3098980;
+            expected = 2050170;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 226992448.5;
+            expected = 161601172;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
-            expected = 4289723;
+            expected = 7609520;
             actual = stock.NetForeignBuy;
             Assert.AreEqual(expected, actual);
 
-            //PSBANK                   PSB     51.5 - - - - - - - -
+            //PSBANK PSB 98.55 102.9 102.9 102.9 102.9 102.9 50 5,145 -
             stock = pd.GetStock("PSB");
             expected = 0;
             actual = stock.High;
@@ -599,29 +599,29 @@ namespace PSEGetTest
             // psei
             SectorItem psei = pd.GetSector(PSEDocument.PSEI);
                        
-            ulong expected = 7786326861;
+            ulong expected = 3150242905;
             ulong actual = psei.Volume;
 
             Assert.AreEqual(expected, actual, "PSEi volume not equal");
 
-            double expected_value = 12960265679.1516;
+            double expected_value = 5634576802.26;
             double actual_value = pd.GetSector(PSEDocument.PSEI).Value;
 
             Assert.AreEqual(expected_value, actual_value, "PSEi value not equal");
 
-            expected_value = 3979.97;
+            expected_value = 7007.63;
             actual_value = psei.Open;
             Assert.AreEqual(expected_value, actual_value, "PSEi open not equal");
 
-            expected_value = 4053.32;
+            expected_value = 7011.28;
             actual_value = psei.High;
             Assert.AreEqual(expected_value, actual_value, "PSEi high not equal");
 
-            expected_value = 3979.97;
+            expected_value = 6986.86;
             actual_value = psei.Low;
             Assert.AreEqual(expected_value, actual_value, "PSEi low not equal");
 
-            expected_value = 4053.32;
+            expected_value = 6999.75;
             actual_value = psei.Close;
             Assert.AreEqual(expected_value, actual_value, "PSEi close not equal");
 
@@ -629,33 +629,33 @@ namespace PSEGetTest
             // financial
             SectorItem financial = pd.GetSector(PSEDocument.FINANCIAL);
 
-            expected = 24780801;
+            expected = 8105540;
             actual = financial.Volume;
 
             Assert.AreEqual(expected, actual, "Financial volume not equal");
 
-            expected_value = 882690827.9;
+            expected_value = 755542372.19;
             actual_value = financial.Value;
 
             Assert.AreEqual(expected, actual, "Financial value not equal");
 
             //913.01 935.52 909.34 935.52 2.47 22.51 24,780,801 882,690,827.9
-            expected_value = 913.01;
+            expected_value = 1585.35;
             actual_value = financial.Open;
 
             Assert.AreEqual(expected_value, actual_value, "Financial open not equal");
 
-            expected_value = 935.52;
+            expected_value = 1585.39;
             actual_value = financial.High;
 
             Assert.AreEqual(expected_value, actual_value, "Financial high not equal");
 
-            expected_value = 909.34;
+            expected_value = 1577.85;
             actual_value = financial.Low;
 
             Assert.AreEqual(expected_value, actual_value, "Financial low not equal");
 
-            expected_value = 935.52;
+            expected_value = 1583.44;
             actual_value = financial.Close;
 
             Assert.AreEqual(expected_value, actual_value);
@@ -664,40 +664,40 @@ namespace PSEGetTest
             // mining
             SectorItem mining = pd.GetSector(PSEDocument.MINING_OIL);
 
-            expected = 3832444034;
+            expected = 2528326978;
             actual = mining.Volume;
 
             Assert.AreEqual(expected, actual, "Mining volume not equal");
 
-            expected_value = 977394265.25;
+            expected_value = 143087427.64;
             actual_value = mining.Value;
 
             Assert.AreEqual(expected, actual, "Mining value not equal");
 
             //11,644.77 12,468.64 11,644.77 12,387.7 7.97 914.68 3,832,444,034 977,394,265.25
 
-            expected_value = 11644.77;
+            expected_value = 10885.19;
             actual_value = mining.Open;
 
             Assert.AreEqual(expected_value, actual_value);
 
-            expected_value = 12468.64;
+            expected_value = 10886.63;
             actual_value = mining.High;
 
             Assert.AreEqual(expected_value, actual_value);
 
-            expected_value = 11644.77;
+            expected_value = 10700.58;
             actual_value = mining.Low;
 
             Assert.AreEqual(expected_value, actual_value);
 
-            expected_value = 12387.7;
+            expected_value = 10740.09;
             actual_value = mining.Close;
 
             Assert.AreEqual(expected_value, actual_value);
 
             SectorItem pse = pd.GetSector(PSEDocument.PSEI);
-            expected_value = 1938423893.11;
+            expected_value = -616052104.21;
             actual_value = pse.NetForeignBuy;
 
             Assert.AreEqual(expected_value, actual_value);
