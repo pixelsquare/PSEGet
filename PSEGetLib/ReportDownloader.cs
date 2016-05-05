@@ -105,7 +105,7 @@ namespace PSEGetLib
                 DateTime reportDate = DownloadParams.FromDate;
                 do
                 {
-                    DownloadParams downloadParams = (DownloadParams)DownloadParams.Clone();
+                    var downloadParams = (DownloadParams)DownloadParams.Clone();
                     downloadParams.FileName = downloadParams.FileName.Replace("%dd", String.Format("{0:00}", reportDate.Day));
                     downloadParams.FileName = downloadParams.FileName.Replace("%mm", String.Format("{0:00}", reportDate.Month));
                     downloadParams.FileName = downloadParams.FileName.Replace("%yyyy", String.Format("{0:00}", reportDate.Year));
@@ -145,7 +145,7 @@ namespace PSEGetLib
         {
             if (downloadQueue.Count > 0)
             {
-                DownloadParams downloadParams = (DownloadParams)downloadQueue.Dequeue();
+                var downloadParams = (DownloadParams)downloadQueue.Dequeue();
                 CurrentDownloadFile = SavePath + Helpers.GetDirectorySeparator() + downloadParams.FileName;
                 wc.DownloadFileAsync(new Uri(downloadParams.ToString()), CurrentDownloadFile);                
             }

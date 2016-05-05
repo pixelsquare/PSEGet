@@ -12,12 +12,6 @@ namespace PSEGetLib.Converters
         {
         }
 
-        //public AmibrokerConverter(PSEDocument pseDocument, AmiOutputSettings outputSettings)
-        //{
-        //    this.PSEDocument = pseDocument;
-        //    this.OutputSettings = outputSettings;
-        //}
-
         private PSEDocument PSEDocument
         {
             get;
@@ -60,18 +54,17 @@ namespace PSEGetLib.Converters
 
             foreach (SectorItem sector in this.PSEDocument.Sectors)
             {
-                //if (sector.Open > 0)
-                //{
-                    SetAmibrokerData(amiInvoker, this.PSEDocument, sector, this.OutputSettings);
-                    foreach (SubSectorItem subSector in sector.SubSectors)
+
+                SetAmibrokerData(amiInvoker, this.PSEDocument, sector, this.OutputSettings);
+                foreach (SubSectorItem subSector in sector.SubSectors)
+                {
+                    foreach (StockItem stockItem in subSector.Stocks)
                     {
-                        foreach (StockItem stockItem in subSector.Stocks)
-                        {
-                            if (stockItem.Open > 0)
-                                SetAmibrokerData(amiInvoker, this.PSEDocument, stockItem, this.OutputSettings);
-                        }
+                        if (stockItem.Open > 0)
+                            SetAmibrokerData(amiInvoker, this.PSEDocument, stockItem, this.OutputSettings);
                     }
-                //}
+                }
+
             }
             amiInvoker.Method("SaveDatabase").Invoke();
             amiInvoker.Method("RefreshAll").Invoke();

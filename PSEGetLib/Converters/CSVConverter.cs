@@ -13,12 +13,6 @@ namespace PSEGetLib.Converters
         {
         }
 
-        //public CSVConverter(PSEDocument pseDocument, CSVOutputSettings outputSettings)
-        //{
-        //    _pseDocument = pseDocument;
-        //    _outputSettings = outputSettings;
-        //}
-
         private PSEDocument PSEDocument
         {
             get; set;

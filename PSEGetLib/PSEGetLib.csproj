@@ -111,6 +111,7 @@
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Converters\AmibrokerConverter.cs" />
     <Compile Include="Converters\AmiOutputSettings.cs" />
+    <Compile Include="Converters\Converter.cs" />
     <Compile Include="Converters\CSVConverter.cs" />
     <Compile Include="Converters\CSVOutputSettings.cs" />
     <Compile Include="Converters\DataConverter-deprecated.cs" />

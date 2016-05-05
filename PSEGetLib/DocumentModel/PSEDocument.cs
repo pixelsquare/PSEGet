@@ -4,15 +4,14 @@ using System.Linq;
 using System.Collections.Specialized;
 using System.Collections;
 using PSEGetLib.Converters;
-using System.Reflection;
 
 namespace PSEGetLib.DocumentModel
 {
     public class PSEDocument
     {
-        private delegate void ToCSVDelegate(PSEDocument pseDocument, CSVOutputSettings csvOutputSettings);
-        private delegate void ToAmibrokerDelegate(PSEDocument pseDocument, AmiOutputSettings amiOutputSettings);
-        private delegate void ToMetaStockDelegate(PSEDocument pseDocument, MetaOutputSettings metaOutputSettings);
+        //private delegate void ToCSVDelegate(PSEDocument pseDocument, CSVOutputSettings csvOutputSettings);
+        //private delegate void ToAmibrokerDelegate(PSEDocument pseDocument, AmiOutputSettings amiOutputSettings);
+        //private delegate void ToMetaStockDelegate(PSEDocument pseDocument, MetaOutputSettings metaOutputSettings);
 
         // constants
         public const string FINANCIAL = "^FINANCIAL";
@@ -30,63 +29,27 @@ namespace PSEGetLib.DocumentModel
         public const string ETF = "^ETF";
 
         private Hashtable _sectorHash = new Hashtable();
-
-        //fields
-        private List<SectorItem> _sectors;
         private DateTime _tradeDate;
-        private int _numAdvance;
-        private int _numDeclines;
-        private int _numUnchanged;
-        //private int _numTraded;
-        //private int _numTrades;
-        private ulong _oddLotVolume;
-        private double _oddLotValue;
-        private ulong _mainCrossVolume;
-        private double _mainCrossValue;
-        private double _bondsVolume;
-        private double _bondsValue;
-        private StringCollection _exchangeNotice;
-        private double _totalForeignBuying;
-        private double _totalForeignSelling;
-        private string _blockSales;
 
         public PSEDocument()
         {
-            _sectors = new List<SectorItem>();
-            _exchangeNotice = new StringCollection();
-
-            //this.InitSectors();
+            Sectors = new List<SectorItem>();
+            ExchangeNotice = new StringCollection();            
         }
 
         public void ToCSV(CSVOutputSettings csvOutputSettings)
         {
-            var converter = new CSVConverter();
-            converter.Execute(this, csvOutputSettings);
+            Converter.Convert<CSVOutputSettings>(this, csvOutputSettings);
         }
 
         public void ToAmibroker(AmiOutputSettings amiOutputSettings)
         {
-            var converter = new AmibrokerConverter();
-            converter.Execute(this, amiOutputSettings);
+            Converter.Convert<AmiOutputSettings>(this, amiOutputSettings);
         }
 
         public void ToMetaStock(MetaOutputSettings metaOutputSettings)
         {
-            CSVOutputSettings csvOutputSettings = new CSVOutputSettings();
-            csvOutputSettings.DateFormat = "yyyymmdd";
-            csvOutputSettings.CSVFormat = "{S},M,{D},{O},{H},{L},{C},{V},{F}";
-            csvOutputSettings.Delimiter = ",";
-            csvOutputSettings.Filename = "tmp.csv";
-            csvOutputSettings.SectorVolumeDivider = metaOutputSettings.SectorVolumeDivider;
-            csvOutputSettings.OutputDirectory = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            csvOutputSettings.UseSectorValueAsVolume = metaOutputSettings.UseSectorValueAsVolume;
-            
-            CSVConverter csvConverter = new CSVConverter();
-            csvConverter.Execute(this, csvOutputSettings);
-
-            string csvFile = csvOutputSettings.OutputDirectory + "\\" + csvOutputSettings.Filename; 
-            MetastockConverter converter = new MetastockConverter(this, csvFile, metaOutputSettings);
-            converter.Execute(this, metaOutputSettings);
+            Converter.Convert<MetaOutputSettings>(this, metaOutputSettings);
         }
 
         private void InitSectors()
@@ -161,17 +124,6 @@ namespace PSEGetLib.DocumentModel
 
         public StockItem GetStock(string symbol)
         {
-
-            /*var stockItem = from stock in
-                                (from subsector in (from sectorItem in this.Sectors select sectorItem) select subsector)
-                            where stock.Symbol == symbol
-                            select stock;
-            foreach (var s in stockItem)
-            {
-                return s.SubSectors[0].Stocks[0];
-            }
-            throw new Exception(symbol + " not found");*/
-
             foreach (SectorItem sector in Sectors)
             {
                 foreach (SubSectorItem subSector in sector.SubSectors)
@@ -191,8 +143,8 @@ namespace PSEGetLib.DocumentModel
 
         public List<SectorItem> Sectors
         {
-            get { return _sectors; }
-            set { _sectors = value; }
+            get;
+            set;
         }
 
         public DateTime TradeDate
@@ -209,102 +161,98 @@ namespace PSEGetLib.DocumentModel
 
         public int NumAdvance
         {
-            get { return _numAdvance; }
-            set { _numAdvance = value; }
+            get;
+            set;
         }
 
         public int NumDeclines
         {
-            get { return _numDeclines; }
-            set { _numDeclines = value; }
+            get;
+            set;
         }
 
         public int NumUnchanged
         {
-            get { return _numUnchanged; }
-            set { _numUnchanged = value; }
+            get;
+            set;
         }
 
         public int NumTraded
         {
-            //get { return _numTraded; }
-            //set { _numTraded = value; }
             get; set;
         }
 
         public int NumTrades
         {
-            //get { return _numTrades; }
-            //set { _numTrades = value; }
             get; set;
         }
 
         public ulong OddLotVolume
         {
-            get { return _oddLotVolume; }
-            set { _oddLotVolume = value; }
+            get;
+            set;
         }
 
         public double OddLotValue
         {
-            get { return _oddLotValue; }
-            set { _oddLotValue = value; }
+            get;
+            set;
         }
 
         public ulong MainCrossVolume
         {
-            get { return _mainCrossVolume; }
-            set { _mainCrossVolume = value; }
+            get;
+            set;
         }
 
         public double MainCrossValue
         {
-            get { return _mainCrossValue; }
-            set { _mainCrossValue = value; }
+            get;
+            set;
         }
 
         public double BondsVolume
         {
-            get { return _bondsVolume; }
-            set { _bondsVolume = value; }
+            get;
+            set;
         }
 
         public double BondsValue
         {
-            get { return _bondsValue; }
-            set { _bondsValue = value; }
+            get;
+            set;
         }
 
         public StringCollection ExchangeNotice
         {
-            get { return _exchangeNotice; }
-            set { _exchangeNotice = value; }
+            get;
+            set;
         }
 
         public double TotalForeignBuying
         {
-            get { return _totalForeignBuying; }
-            set { _totalForeignBuying = value; }
+            get;
+            set;
         }
 
         public double TotalForeignSelling
         {
-            get { return _totalForeignSelling; }
-            set { _totalForeignSelling = value; }
+            get;
+            set;
         }
 
         public double NetForeignBuying
         {
             get
             {
-                return this._totalForeignBuying - this._totalForeignSelling;
+                return this.TotalForeignBuying - this.TotalForeignSelling;
             }            
         }
 
         public string BlockSales
         {
-            get { return _blockSales; }
-            set { _blockSales = value; }
+            get;
+            set;
         }
     }
 }
