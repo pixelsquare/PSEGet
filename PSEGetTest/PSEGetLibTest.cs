@@ -83,17 +83,17 @@ namespace PSEGetTest
             Assert.AreEqual(expected, actual);           
         }
 
-        [TestMethod]
-        public void TestReaderLastLine()
-        {
-            //PDFTextStripper stripper = new PDFTextStripper();
-            var pdfSharpService = new PdfTextSharpService();
-            PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
+        //[TestMethod]
+        //public void TestReaderLastLine()
+        //{
+        //    //PDFTextStripper stripper = new PDFTextStripper();
+        //    var pdfSharpService = new PdfTextSharpService();
+        //    PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
 
-            string expected = "*** Grand total includes main,oddlot and block sale transactions";
-            string actual = reader.PSEReportString[reader.PSEReportString.Count - 1].Trim();
-            Assert.AreEqual(expected, actual);
-        }
+        //    string expected = "*** Grand total includes main,oddlot and block sale transactions";
+        //    string actual = reader.PSEReportString[reader.PSEReportString.Count - 1].Trim();
+        //    Assert.AreEqual(expected, actual);
+        //}
 
         [TestMethod]
         public void TestReaderFill_TradDate()
@@ -265,85 +265,88 @@ namespace PSEGetTest
 
             //PSBANK PSB 98.55 102.9 102.9 102.9 102.9 102.9 50 5,145 -
             stock = pd.GetStock("PSB");
-            expected = 0;
+            expected = 102.9;
             actual = stock.High;
             Assert.AreEqual(expected, actual);
 
             actual = stock.Volume;
+            expected = 50;
             Assert.AreEqual(expected, actual);
 
             actual = stock.Value;
+            expected = 5145;
             Assert.AreEqual(expected, actual);
 
             actual = stock.NetForeignBuy;
-            Assert.AreEqual(expected, actual);           
+            expected = 0;
+            Assert.AreEqual(expected, actual);
 
-            //MANULIFE                 MFC     557 559 556 560 556 559 160 89,380 (16,680)
+            //MANULIFE MFC 580 610 - - - - - - -
             stock = pd.GetStock("MFC");
-            expected = 559;
+            expected = 0;
             actual = stock.Close;
             Assert.AreEqual(expected, actual);
 
-            expected = 160;
+            expected = 0;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 89380;
+            expected = 0;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
-            expected = -16680;
+            expected = 0;
             actual = stock.NetForeignBuy;
-            Assert.AreEqual(expected, actual);               
+            Assert.AreEqual(expected, actual);
 
-            //ENERGY DEVT.             EDC     6.04 6.06 5.76 6.06 5.76 6.06 84,308,100 499,835,886 18,306,534
+            //ENERGY DEVT EDC 5.65 5.66 5.62 5.7 5.6 5.65 5,854,000 32,973,299 (19,410,534)
             stock = pd.GetStock("EDC");
-            expected = 6.06;
+            expected = 5.66;
             actual = stock.Ask;
             Assert.AreEqual(expected, actual);
 
-            expected = 5.76;
+            expected = 5.6;
             actual = stock.Low;
             Assert.AreEqual(expected, actual);
 
-            expected = 84308100;
+            expected = 5854000;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 499835886;
+            expected = 32973299;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
-            expected = 18306534;
+            expected = -19410534;
             actual = stock.NetForeignBuy;
             Assert.AreEqual(expected, actual);
-            
-            //COSMOS                   CBC     - - - - - - - - -
-            stock = pd.GetStock("CBC");
-            expected = 0;
-            actual = stock.High;
-            Assert.AreEqual(expected, actual);
 
-            actual = stock.Volume;
-            Assert.AreEqual(expected, actual);
+            ////COSMOS                   CBC     - - - - - - - - -
+            //stock = pd.GetStock("CBC");
+            //expected = 0;
+            //actual = stock.High;
+            //Assert.AreEqual(expected, actual);
 
-            actual = stock.Value;
-            Assert.AreEqual(expected, actual);
+            //actual = stock.Volume;
+            //Assert.AreEqual(expected, actual);
 
-            actual = stock.NetForeignBuy;
-            Assert.AreEqual(expected, actual);    
+            //actual = stock.Value;
+            //Assert.AreEqual(expected, actual);
 
-            //VULCAN IND`L             VUL     0.81 0.86 0.79 0.86 0.79 0.86 140,000 118,170 -
+            //actual = stock.NetForeignBuy;
+            //Assert.AreEqual(expected, actual);    
+
+            //VULCAN INDL VUL 1.26 1.27 1.25 1.3 1.25 1.27 369,000 463,800 -
             stock = pd.GetStock("VUL");
-            expected = 0.86;
+            expected = 1.27;
             actual = stock.Close;
             Assert.AreEqual(expected, actual);
 
-            expected = 140000;
+            expected = 369000;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 118170;
+            expected = 463800;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
@@ -351,31 +354,31 @@ namespace PSEGetTest
             actual = stock.NetForeignBuy;
             Assert.AreEqual(expected, actual);
 
-            //ANSCOR                   ANS     3.12 3.15 3.12 3.15 3.12 3.15 227,000 710,740 62,400
+            //ANSCOR ANS 5.92 6 6 6 5.97 5.97 3,000 17,970 -
             stock = pd.GetStock("ANS");
-            expected = 3.12;
+            expected = 5.92;
             actual = stock.Bid;
             Assert.AreEqual(expected, actual);
 
-            expected = 3.12;
+            expected = 6;
             actual = stock.Open;
             Assert.AreEqual(expected, actual);
 
-            expected = 227000;
+            expected = 3000;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 710740;
+            expected = 17970;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
-            expected = 62400;
+            expected = 0;
             actual = stock.NetForeignBuy;
             Assert.AreEqual(expected, actual);
 
-            //SEAFRONT RES.            SPM     0.95 1.2 - - - - - - -
+            //SEAFRONT RES SPM 2.13 2.34 - - - - - - -
             stock = pd.GetStock("SPM");
-            expected = 1.2;
+            expected = 2.34;
             actual = stock.Ask;
             Assert.AreEqual(expected, actual);
 
@@ -390,102 +393,102 @@ namespace PSEGetTest
             Assert.AreEqual(expected, actual);
 
             //SINOPHIL                 SINO    0.305 0.31 0.31 0.31 0.305 0.305 1,190,000 366,450 -
-            stock = pd.GetStock("SINO");
-            expected = 0.31;
-            actual = stock.High;
-            Assert.AreEqual(expected, actual);
+            //stock = pd.GetStock("SINO");
+            //expected = 0.31;
+            //actual = stock.High;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 0.305;
-            actual = stock.Close;
-            Assert.AreEqual(expected, actual);
+            //expected = 0.305;
+            //actual = stock.Close;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 1190000;
-            actual = stock.Volume;
-            Assert.AreEqual(expected, actual);
+            //expected = 1190000;
+            //actual = stock.Volume;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 366450;
-            actual = stock.Value;
-            Assert.AreEqual(expected, actual);
+            //expected = 366450;
+            //actual = stock.Value;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 0;
-            actual = stock.NetForeignBuy;
-            Assert.AreEqual(expected, actual);
-            
+            //expected = 0;
+            //actual = stock.NetForeignBuy;
+            //Assert.AreEqual(expected, actual);
 
-            //AYALA LAND               ALI     17.24 17.26 17.3 17.32 17.1 17.24 7,144,400 123,230,996 (79,735,452)
+
+            //AYALA LAND ALI 33.8 33.85 33.7 34 33.65 33.8 11,833,600 400,085,500 (62,456,645)
             stock = pd.GetStock("ALI");
-            expected = 17.24;
+            expected = 33.8;
             actual = stock.Close;
             Assert.AreEqual(expected, actual);
 
-            expected = 7144400;
+            expected = 11833600;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 123230996;
+            expected = 400085500;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
-            expected = -79735452;
+            expected = -62456645;
             actual = stock.NetForeignBuy;
             Assert.AreEqual(expected, actual);
 
 
             //MARSTEEL B               MCB     - - - - - - - - -
-            stock = pd.GetStock("MCB");
-            expected = 0;
-            actual = stock.Bid;
-            Assert.AreEqual(expected, actual);
+            //stock = pd.GetStock("MCB");
+            //expected = 0;
+            //actual = stock.Bid;
+            //Assert.AreEqual(expected, actual);
 
-            actual = stock.Open;
-            Assert.AreEqual(expected, actual);
+            //actual = stock.Open;
+            //Assert.AreEqual(expected, actual);
 
-            actual = stock.Close;
-            Assert.AreEqual(expected, actual);
+            //actual = stock.Close;
+            //Assert.AreEqual(expected, actual);
 
-            actual = stock.Volume;
-            Assert.AreEqual(expected, actual);
+            //actual = stock.Volume;
+            //Assert.AreEqual(expected, actual);
 
-            actual = stock.Value;
-            Assert.AreEqual(expected, actual);
+            //actual = stock.Value;
+            //Assert.AreEqual(expected, actual);
 
-            actual = stock.NetForeignBuy;
-            Assert.AreEqual(expected, actual);
-           
+            //actual = stock.NetForeignBuy;
+            //Assert.AreEqual(expected, actual);
+
 
             //SM DEVT                  SMDC 9.35 9.4 8.64 9.8 8.64 9.35 3,641,200 33,750,420 633,735
-            stock = pd.GetStock("SMDC");
-            expected = 9.35;
-            actual = stock.Bid;
-            Assert.AreEqual(expected, actual);
+            //stock = pd.GetStock("SMDC");
+            //expected = 9.35;
+            //actual = stock.Bid;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 8.64;
-            actual = stock.Low;
-            Assert.AreEqual(expected, actual);
+            //expected = 8.64;
+            //actual = stock.Low;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 3641200;
-            actual = stock.Volume;
-            Assert.AreEqual(expected, actual);
+            //expected = 3641200;
+            //actual = stock.Volume;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 33750420;
-            actual = stock.Value;
-            Assert.AreEqual(expected, actual);
+            //expected = 33750420;
+            //actual = stock.Value;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 633735;
-            actual = stock.NetForeignBuy;
-            Assert.AreEqual(expected, actual);
+            //expected = 633735;
+            //actual = stock.NetForeignBuy;
+            //Assert.AreEqual(expected, actual);
 
-            //GMA NETWORK              GMA7 7.4 7.45 7.4 7.45 7 7.4 408,500 3,010,200 -
+            //GMA NETWORK GMA7 6.75 6.78 6.75 6.78 6.71 6.78 74,300 501,102 -
             stock = pd.GetStock("GMA7");
-            expected = 7;
+            expected = 6.71;
             actual = stock.Low;
             Assert.AreEqual(expected, actual);
 
-            expected = 408500;
+            expected = 74300;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 3010200;
+            expected = 501102;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
@@ -494,34 +497,34 @@ namespace PSEGetTest
             Assert.AreEqual(expected, actual);
 
             //DIGITEL                  DGTL 1.51 1.52 1.53 1.54 1.51 1.52 36,056,000 54,884,680 (686,960)
-            stock = pd.GetStock("DGTL");
-            expected = 1.53;
-            actual = stock.Open;
-            Assert.AreEqual(expected, actual);
+            //stock = pd.GetStock("DGTL");
+            //expected = 1.53;
+            //actual = stock.Open;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 36056000;
-            actual = stock.Volume;
-            Assert.AreEqual(expected, actual);
+            //expected = 36056000;
+            //actual = stock.Volume;
+            //Assert.AreEqual(expected, actual);
 
-            expected = 54884680;
-            actual = stock.Value;
-            Assert.AreEqual(expected, actual);
+            //expected = 54884680;
+            //actual = stock.Value;
+            //Assert.AreEqual(expected, actual);
 
-            expected = -686960;
-            actual = stock.NetForeignBuy;
-            Assert.AreEqual(expected, actual);
+            //expected = -686960;
+            //actual = stock.NetForeignBuy;
+            //Assert.AreEqual(expected, actual);
 
-            //WATERFRONT               WPI     0.25 0.265 0.27 0.27 0.27 0.27 50,000 13,500 -
+            //WATERFRONT WPI 0.33 0.34 0.33 0.33 0.33 0.33 430,000 141,900 -
             stock = pd.GetStock("WPI");
-            expected = 0.27;
+            expected = 0.33;
             actual = stock.Close;
             Assert.AreEqual(expected, actual);
 
-            expected = 50000;
+            expected = 430000;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 13500;
+            expected = 141900;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
@@ -529,53 +532,53 @@ namespace PSEGetTest
             actual = stock.NetForeignBuy;
             Assert.AreEqual(expected, actual);
 
-            //GEOGRACE                 GEO     0.72 0.73 0.7 0.8 0.7 0.73 58,761,000 43,384,240 (7,200)
+            //GEOGRACE GEO 0.28 0.29 0.28 0.285 0.28 0.285 450,000 126,050 -
             stock = pd.GetStock("GEO");
-            expected = 0.8;
+            expected = 0.285;
             actual = stock.High;
             Assert.AreEqual(expected, actual);
 
-            expected = 58761000;
+            expected = 450000;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 43384240;
+            expected = 126050;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
-            expected = -7200;
+            expected = 0;
             actual = stock.NetForeignBuy;
             Assert.AreEqual(expected, actual);
 
-            //SEMIRARA MINING          SCC     142.1 143 139 145 139 143 569,960 80,377,827 (41,123,492)
+            //SEMIRARA MINING SCC 126.4 126.5 127 127 126.1 126.5 240,020 30,357,793 (10,789,654)
             stock = pd.GetStock("SCC");
-            expected = 143;
+            expected = 126.5;
             actual = stock.Ask;
             Assert.AreEqual(expected, actual);
 
-            expected = 569960;
+            expected = 240020;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 80377827;
+            expected = 30357793;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
-            expected = -41123492;
+            expected = -10789654;
             actual = stock.NetForeignBuy;
             Assert.AreEqual(expected, actual);
 
-            //PHILODRILL A             OV      0.014 0.015 0.014 0.015 0.014 0.014 173,200,000 2,525,900 -
+            //PHILODRILL OV 0.012 0.013 0.012 0.012 0.012 0.012 13,200,000 158,400 -
             stock = pd.GetStock("OV");
-            expected = 0.014;
+            expected = 0.012;
             actual = stock.Close;
             Assert.AreEqual(expected, actual);
 
-            expected = 173200000;
+            expected = 13200000;
             actual = stock.Volume;
             Assert.AreEqual(expected, actual);
 
-            expected = 2525900;
+            expected = 158400;
             actual = stock.Value;
             Assert.AreEqual(expected, actual);
 
