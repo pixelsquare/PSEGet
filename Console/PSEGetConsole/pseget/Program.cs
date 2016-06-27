@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using PSEGetLib;
 using PSEGetLib.Interfaces;
 using PSEGetLib.Service;
@@ -75,16 +76,12 @@ namespace pseget
                 }
                 else
                     csvFormat = "{S},{D},{O},{H},{L},{C},{V},{F}";
-
-                var outputFilename = ("stockQuotes_%mm%dd%yyyy").Replace("%mm", pseDocument.TradeDate.Month.ToString());
-                outputFilename = outputFilename.Replace("%dd", pseDocument.TradeDate.Day.ToString());
-                outputFilename = outputFilename.Replace("%yyyy", pseDocument.TradeDate.Year.ToString());
-
+               
                 var csvOutputSettings = new CSVOutputSettings();
                 csvOutputSettings.CSVFormat = csvFormat;
                 csvOutputSettings.DateFormat = _dateFormat;
                 csvOutputSettings.Delimiter = ",";
-                csvOutputSettings.Filename = outputFilename + ".csv";
+                csvOutputSettings.Filename = Path.GetFileName(_targetPath).Replace("pdf", "csv");
                 csvOutputSettings.OutputDirectory = _outputPath;
                 csvOutputSettings.UseSectorValueAsVolume = true;
                 csvOutputSettings.SectorVolumeDivider = 1000;
