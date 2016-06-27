@@ -5,6 +5,8 @@ using PSEGetLib.Interfaces;
 using PSEGetLib.Service;
 using PSEGetLib.DocumentModel;
 using PSEGetLib.Converters;
+using System.Reflection;
+using System.Net;
 
 namespace pseget
 {
@@ -14,6 +16,9 @@ namespace pseget
         static string _outputPath;
         static string _outputFormat;
         static string _dateFormat;
+        static string _dateFrom;
+        static string _dateTo;
+        static string _reportsDir;
 
         static void Main(string[] args)
         {
@@ -22,10 +27,10 @@ namespace pseget
                 DisplayHelp();
                 return;
             }
-
-            Initialize();
+            
             try
             {
+                Initialize();
                 WorkIt();
             }
             catch(Exception e)
@@ -38,25 +43,34 @@ namespace pseget
         {
             if (_targetPath == null)
             {
-                Console.WriteLine("Error: Unspecified PSE report file path.");
-                return;
+                throw new Exception("Error: Unspecified PSE report file path.");                
             }
-
-            var pseDocument = new PSEDocument();
+            
             IPdfService pdfService = new PdfTextSharpService();
+            string fileToConvert = string.Empty;
             if (_targetPath.Contains("http:"))
             {
-                IReportDownloader downloader = new ReportDownloader();
-                downloader.DownloadParams.BaseURL = _targetPath;
-                downloader.DownloadParams.FileName = "stockQuotes_%mm%dd%yyyy";
-                downloader.SavePath = Environment.CurrentDirectory + "\\Reports";
+                var downloadParams = new DownloadParams();
+                downloadParams.BaseURL = _targetPath;
+                downloadParams.FileName = "stockQuotes_%mm%dd%yyyy";
+                downloadParams.FromDate = Convert.ToDateTime(_dateFrom);
+                downloadParams.ToDate = Convert.ToDateTime(_dateTo);                
+
+                var downloader = new ReportDownloader(downloadParams, _reportsDir, null);
+                downloader.AsyncMode = false;
                 downloader.Download();
+
+                fileToConvert = downloader.CurrentDownloadFile;
+
             }
             else
             {
-                IPSEReportReader reader = new PSEReportReader(pdfService.ExtractTextFromPdf(_targetPath));
-                reader.Fill(pseDocument);
+                fileToConvert = _targetPath;                
             }
+
+            var pseDocument = new PSEDocument();
+            IPSEReportReader reader = new PSEReportReader(pdfService.ExtractTextFromPdf(fileToConvert));            
+            reader.Fill(pseDocument);
 
             if (_outputFormat.Contains("csv"))
             {
@@ -81,7 +95,7 @@ namespace pseget
                 csvOutputSettings.CSVFormat = csvFormat;
                 csvOutputSettings.DateFormat = _dateFormat;
                 csvOutputSettings.Delimiter = ",";
-                csvOutputSettings.Filename = Path.GetFileName(_targetPath).Replace("pdf", "csv");
+                csvOutputSettings.Filename = Path.GetFileName(fileToConvert).Replace("pdf", "csv");
                 csvOutputSettings.OutputDirectory = _outputPath;
                 csvOutputSettings.UseSectorValueAsVolume = true;
                 csvOutputSettings.SectorVolumeDivider = 1000;
@@ -114,7 +128,24 @@ namespace pseget
 
         static void Initialize()
         {
+            string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            _reportsDir = Path.Combine(exeDir, "Reports");
+            if (!Directory.Exists(_reportsDir))
+                Directory.CreateDirectory(_reportsDir);
+
             _targetPath = GetParamValue("-t");
+            _dateFrom = GetParamValue("-df");
+            if (_dateFrom == "today")
+            {
+                _dateFrom = DateTime.Today.ToString("MM/dd/yyyy");
+            }
+
+            _dateTo = GetParamValue("-dt");
+            if (_dateTo == null)
+            {
+                _dateTo = _dateFrom;
+            }
+
             _outputPath = GetParamValue("-o");
             if (_outputPath == null)
             {
@@ -152,9 +183,13 @@ namespace pseget
         static void DisplayHelp()
         {
             Console.WriteLine("PSEGet Console. (c) 2016 Arnold Diaz.");
-            Console.WriteLine("\tUsage: pseget -t [<from: date to: date> | local path] -o [output path] -f [csv:<format> | ami] -d [date format]");
+            Console.WriteLine("\tUsage: pseget -t [url | local path] -df [from date] -dt [to date] -o [output path] -f [csv:<format> | ami:<database path>] -d [date format]");
             Console.WriteLine("\t-t [url:<from: date to: date> | local path]");
-            Console.WriteLine("\t\tPSE Report File Path. \n");
+            Console.WriteLine("\t\tPSE Report File Path.\n");
+            Console.WriteLine("\t-df [from date]");
+            Console.WriteLine("\t\tStart download from specified date.");
+            Console.WriteLine("\t-dt [to date]");
+            Console.WriteLine("\t\tOptional. Download to specified date. Date will default to -df date if not specified.\n");
             Console.WriteLine("\t-o [output path]");
             Console.WriteLine("\t\tOptional. Output Path. Defaults to executable path.\n");
             Console.WriteLine("\t-f [csv:<format> | ami:<database path>]");
@@ -162,11 +197,12 @@ namespace pseget
             Console.WriteLine("\t\tCSV Optional <format> defaults to S,D,O,H,L,C,V,F\n");            
             Console.WriteLine("\t-d [date format]");
             Console.WriteLine("\t\tOptional Date Format. Defaults to MM/dd/yyyy.\n");
-            Console.WriteLine("Example 1 (Download)       : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/:from:06/20/2016 to:06/24/2016 ");
-            Console.WriteLine("Example 2 (From file)     : pseget -t c:\\myreports\\stockQuotes_552016.pdf");
-            Console.WriteLine("Example 3 (Typical)       : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/:from:06/20/2016 to:06/24/2016 -o c:\\myfolder\\");
-            Console.WriteLine("Example 4 (CSV)           : pseget -t c:\\myreports\\stockQuotes_552016.pdf -o c:\\myfolder\\ -f csv:S,D,C");
-            Console.WriteLine("Example 5 (Amibroker)     : pseget -t c:\\myreports\\stockQuotes_552016.pdf -f ami:\"c:\\program files\\\"");
+            Console.WriteLine("Example 1 (Download range) : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df 06/20/2016 -dt 06/24/2016 ");
+            Console.WriteLine("Example 2 (Download today) : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df today");
+            Console.WriteLine("Example 3 (From file)      : pseget -t c:\\myreports\\stockQuotes_552016.pdf");
+            Console.WriteLine("Example 4 (Typical)        : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df 06/20/2016 -dt 06/24/2016 -o c:\\myfolder\\");
+            Console.WriteLine("Example 5 (CSV)            : pseget -t c:\\myreports\\stockQuotes_552016.pdf -o c:\\myfolder\\ -f csv:S,D,C");
+            Console.WriteLine("Example 6 (Amibroker)      : pseget -t c:\\myreports\\stockQuotes_552016.pdf -f ami:\"c:\\program files\\\"");
         }
     }
 }
