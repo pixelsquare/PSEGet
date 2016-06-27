@@ -94,7 +94,7 @@ namespace PSEGetLib.Converters
 
         public void Execute(PSEDocument pseDocument, CSVOutputSettings csvOutputSettings)
         {   
-            this.PSEDocument = PSEDocument;
+            this.PSEDocument = pseDocument;
             this.OutputSettings = csvOutputSettings;            
             DoExecute();
         }
