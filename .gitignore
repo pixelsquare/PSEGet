@@ -17,3 +17,5 @@ packages/
 PSEGetTest/bin/
 Release/
 .vs/PSEGet3/v14/.suo
+Console/PSEGetConsole/pseget/bin/
+Console/PSEGetConsole/pseget/obj/
