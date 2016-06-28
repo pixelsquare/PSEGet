@@ -151,10 +151,7 @@ namespace PSEGetLib
                 if (AsyncMode)
                     wc.DownloadFileAsync(new Uri(downloadParams.ToString()), CurrentDownloadFile);
                 else
-                {
                     wc.DownloadFile(new Uri(downloadParams.ToString()), CurrentDownloadFile);
-                    ProcessQueue();
-                }
             }
             else
             {
