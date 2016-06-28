@@ -45,9 +45,7 @@ namespace pseget
             {
                 throw new Exception("Error: Unspecified PSE report file path.");                
             }
-            
-            IPdfService pdfService = new PdfTextSharpService();
-            string fileToConvert = string.Empty;
+                                   
             if (_targetPath.Contains("http:"))
             {
                 var downloadParams = new DownloadParams();
@@ -60,18 +58,25 @@ namespace pseget
                 downloader.AsyncMode = false;
                 downloader.Download();
 
-                fileToConvert = downloader.CurrentDownloadFile;
-
+                foreach(DownloadFileInfo reportFile in downloader.DownloadedFiles)
+                {
+                    ConvertIt(reportFile.Filename);
+                }               
+               
             }
             else
             {
-                fileToConvert = _targetPath;                
+                ConvertIt(_targetPath);            
             }
-
+                      
+        }       
+        
+        static void ConvertIt(string fileToConvert)
+        {
+            IPdfService pdfService = new PdfTextSharpService();
             var pseDocument = new PSEDocument();
-            IPSEReportReader reader = new PSEReportReader(pdfService.ExtractTextFromPdf(fileToConvert));            
+            IPSEReportReader reader = new PSEReportReader(pdfService.ExtractTextFromPdf(fileToConvert));
             reader.Fill(pseDocument);
-
             if (_outputFormat.Contains("csv"))
             {
                 string[] csvParam = _outputFormat.Split(':');
@@ -90,7 +95,7 @@ namespace pseget
                 }
                 else
                     csvFormat = "{S},{D},{O},{H},{L},{C},{V},{F}";
-               
+
                 var csvOutputSettings = new CSVOutputSettings();
                 csvOutputSettings.CSVFormat = csvFormat;
                 csvOutputSettings.DateFormat = _dateFormat;
@@ -114,8 +119,8 @@ namespace pseget
                 if (amiParam.Length < 2)
                 {
                     throw new Exception("Error: Unspecified Amibroker database folder.");
-                }
-                string amiDatabaseFolder = amiParam[1];
+                }                
+                string amiDatabaseFolder = _outputFormat.Replace("ami:", string.Empty);
 
                 var amiOutputSettings = new AmiOutputSettings();
                 amiOutputSettings.DatabaseDirectory = amiDatabaseFolder;
@@ -123,8 +128,8 @@ namespace pseget
                 amiOutputSettings.UseSectorValueAsVolume = true;
 
                 pseDocument.ToAmibroker(amiOutputSettings);
-            }
-        }            
+      }
+        }     
 
         static void Initialize()
         {
@@ -135,10 +140,10 @@ namespace pseget
 
             _targetPath = GetParamValue("-t");
             _dateFrom = GetParamValue("-df");
-            if (_dateFrom == "today")
+            if (_dateFrom == "today" || _dateFrom == null)
             {
                 _dateFrom = DateTime.Today.ToString("MM/dd/yyyy");
-            }
+            }            
 
             _dateTo = GetParamValue("-dt");
             if (_dateTo == null)
