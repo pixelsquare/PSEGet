@@ -23,10 +23,11 @@ namespace PSEGetLib
         private Action<object, string> OnProgressEvent;
         private Action<Exception> OnExceptionEvent;
         private Action OnDownloadCompleteEvent;
-
+        public bool AsyncMode { get; set; }
         public ReportDownloader()
         {
             DownloadedFiles = new List<DownloadFileInfo>();
+            AsyncMode = true;
             //FailedDownloadFiles = new List<string>();
         }
 
@@ -147,7 +148,13 @@ namespace PSEGetLib
             {
                 var downloadParams = (DownloadParams)downloadQueue.Dequeue();
                 CurrentDownloadFile = SavePath + Helpers.GetDirectorySeparator() + downloadParams.FileName;
-                wc.DownloadFileAsync(new Uri(downloadParams.ToString()), CurrentDownloadFile);                
+                if (AsyncMode)
+                    wc.DownloadFileAsync(new Uri(downloadParams.ToString()), CurrentDownloadFile);
+                else
+                {
+                    wc.DownloadFile(new Uri(downloadParams.ToString()), CurrentDownloadFile);
+                    ProcessQueue();
+                }
             }
             else
             {
