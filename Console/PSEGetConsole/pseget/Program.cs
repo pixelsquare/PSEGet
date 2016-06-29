@@ -6,7 +6,6 @@ using PSEGetLib.Service;
 using PSEGetLib.DocumentModel;
 using PSEGetLib.Converters;
 using System.Reflection;
-using System.Net;
 
 namespace pseget
 {
@@ -60,7 +59,8 @@ namespace pseget
 
                 foreach(DownloadFileInfo reportFile in downloader.DownloadedFiles)
                 {
-                    ConvertIt(reportFile.Filename);
+                    if (reportFile.Success)
+                        ConvertIt(reportFile.Filename);
                 }               
                
             }
@@ -128,7 +128,7 @@ namespace pseget
                 amiOutputSettings.UseSectorValueAsVolume = true;
 
                 pseDocument.ToAmibroker(amiOutputSettings);
-      }
+            }
         }     
 
         static void Initialize()

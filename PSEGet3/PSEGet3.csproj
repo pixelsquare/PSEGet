@@ -195,6 +195,7 @@
     <Compile Include="Messages\ExecuteConvertCommandMessage.cs" />
     <Compile Include="Messages\GetConvertParamMessage.cs" />
     <Compile Include="Messages\LoadMarketSummaryMessage.cs" />
+    <Compile Include="Messages\SetConvertMethodMessage.cs" />
     <Compile Include="Messages\SetWindowPositionMessage.cs" />
     <Compile Include="Messages\ShowExchangeNoticeMessage.cs" />
     <Compile Include="Messages\ShowFoldersDialogMessage.cs" />

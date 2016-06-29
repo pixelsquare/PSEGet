@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
 using PSEGet3.Messages;
 using PSEGet3.Windows;
+using PSEGetLib.Configuration;
 
 namespace PSEGet3.View
 {
@@ -45,6 +46,17 @@ namespace PSEGet3.View
                     Messenger.Default.Send(new BrowseDialogResultMessage(selectedFiles));
                 }
             }
+        }
+
+        // workaround to EventToCommand issue
+        private void expander1_Expanded(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send(new SetConvertMethodMessage(ConvertMethod.DownloadAndConvert));
+        }
+
+        private void expander2_Expanded(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send(new SetConvertMethodMessage(ConvertMethod.ConvertFromFiles));
         }
     }
 }

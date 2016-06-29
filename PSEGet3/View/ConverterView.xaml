@@ -33,7 +33,7 @@
         <StackPanel Orientation="Vertical">
             <Expander x:Name="expander1" Header="Download and Convert"
                       IsExpanded="{Binding IsDownloadAndConvertMethod, Mode=OneWay}"
-                      IsEnabled="{Binding IsBusy, Converter={StaticResource NegateBoolConverter}, Mode=OneWay}">
+                      IsEnabled="{Binding IsBusy, Converter={StaticResource NegateBoolConverter}, Mode=OneWay}" Expanded="expander1_Expanded">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Expanded">
@@ -41,8 +41,8 @@
                         <ei:ChangePropertyAction TargetName="expander3" PropertyName="IsExpanded" Value="False" />
                         <ei:ChangePropertyAction TargetName="outputSettingsView" PropertyName="CSVOptionOnly"
                                                  Value="False" />
-                        <gi:EventToCommand Command="{Binding SetConvertMethodCommand, Mode=OneWay}"
-                                           CommandParameter="{x:Static lib:ConvertMethod.DownloadAndConvert}" />
+                        <!--<gi:EventToCommand Command="{Binding SetConvertMethodCommand, Mode=OneWay}"
+                                           CommandParameter="{x:Static lib:ConvertMethod.DownloadAndConvert}" />-->
                     </i:EventTrigger>
 
                 </i:Interaction.Triggers>
@@ -52,7 +52,7 @@
 
             <Expander x:Name="expander2" Header="Convert From File(s)"
                       IsExpanded="{Binding IsConvertFromFilesMethod, Mode=OneWay}"
-                      IsEnabled="{Binding IsBusy, Converter={StaticResource NegateBoolConverter}, Mode=OneWay}">
+                      IsEnabled="{Binding IsBusy, Converter={StaticResource NegateBoolConverter}, Mode=OneWay}" Expanded="expander2_Expanded">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Expanded">
@@ -60,8 +60,8 @@
                         <ei:ChangePropertyAction TargetName="expander3" PropertyName="IsExpanded" Value="False" />
                         <ei:ChangePropertyAction TargetName="outputSettingsView" PropertyName="CSVOptionOnly"
                                                  Value="False" />
-                        <gi:EventToCommand Command="{Binding SetConvertMethodCommand, Mode=OneWay}"
-                                           CommandParameter="{x:Static lib:ConvertMethod.ConvertFromFiles}" />
+                        <!--<gi:EventToCommand Command="{Binding SetConvertMethodCommand, Mode=OneWay}"
+                                           CommandParameter="{x:Static lib:ConvertMethod.ConvertFromFiles}" />-->
                     </i:EventTrigger>
 
                 </i:Interaction.Triggers>

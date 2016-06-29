@@ -53,8 +53,8 @@ namespace PSEGet3.ViewModel
 
                 // register to receive specific messages
                 Messenger.Default.Register<DownloadAndConvertParamMessage>(this, OnReceiveConvertParamMessage);
-                Messenger.Default.Register<DownloadHistoricalDataParamMessage>(this,
-                    OnReceiveDownloadHistoricalDataParamMsg);
+                //Messenger.Default.Register<DownloadHistoricalDataParamMessage>(this,
+                //    OnReceiveDownloadHistoricalDataParamMsg);
                 Messenger.Default.Register<ConvertFromFileDataParamMessage>(this, OnRcvConvertFromFileDataParamMessage);
                 Messenger.Default.Register<OutputSettingsMessage>(this, OnRcvOutputSettingsMessage);
                 Messenger.Default.Register<ExecuteConvertCommandMessage>(this,
@@ -64,6 +64,16 @@ namespace PSEGet3.ViewModel
                             OnConvert();
                     });
 
+                // workaround to EventToCommand issue
+                Messenger.Default.Register<SetConvertMethodMessage>(this,
+                    msg =>
+                    {
+                        if (msg is SetConvertMethodMessage)
+                        {
+                            DataConvertMethod = (msg as SetConvertMethodMessage).Content;                            
+                        }
+                            
+                    });
                 InitCommands();
 
                 RegisterCommands();
@@ -159,16 +169,23 @@ namespace PSEGet3.ViewModel
         {
             if (msg is ConvertFromFileDataParamMessage)
             {
-                IsBusy = true;
+                                
                 var dataParam = msg as ConvertFromFileDataParamMessage;
-                var t = new Thread(ConvertFromFileHelper.ConvertFromFiles);
-                t.IsBackground = true;
+                if (dataParam.FileList.Count() == 0)
+                {
+                    Messenger.Default.Send(new ShowAppMessage { MessageTitle = "Information", AppMessage = "Nothing to convert." });
+                    return;
+                }
 
-                var param = new ConvertFromFilesParam();
+                var t = new Thread(ConvertFromFileHelper.ConvertFromFiles);
+                t.IsBackground = false;
+
+                var param = new ConvertFromFilesParam();               
                 param.FileList = dataParam.FileList;
                 param.OutputSettings = OutputSettings;
                 param.threadObject = t;
 
+                IsBusy = true;
                 ShowCloseProgressDialogDelegate showProgressDelegate = () =>
                 {
                     Messenger.Default.Send(new CloseWindowMessage());
@@ -177,6 +194,7 @@ namespace PSEGet3.ViewModel
 
                 ShowCloseProgressDialogDelegate closeProgressDelegate = () =>
                 {
+                    IsBusy = false;
                     Messenger.Default.Send<ShowAppMessage, ProgressDialogViewModel>(
                         new ShowAppMessage {MessageTitle = "Done!", AppMessage = "Done."});
                 };
@@ -229,8 +247,7 @@ namespace PSEGet3.ViewModel
                     Application.Current.Dispatcher.Invoke(closeProgressDelegate, null);
                 };
                 param.CompletedCallback = pseDocument =>
-                {
-                    IsBusy = false;
+                {                    
                     Application.Current.Dispatcher.Invoke(closeProgressDelegate, null);
                     ShowExchangeNotice(pseDocument);
                 };
@@ -449,85 +466,85 @@ namespace PSEGet3.ViewModel
             }
         }
 
-        // download historical data
-        private void OnReceiveDownloadHistoricalDataParamMsg(MessageBase message)
-        {
-            if (message is DownloadHistoricalDataParamMessage)
-            {
-                IsBusy = true;
-                CSVOutputSettings csvOutputSettings;
-                if (!(OutputSettings is CSVOutputSettings))
-                    throw new Exception("Invalid output settings. Conversion to CSV is your only option.");
+        //// download historical data
+        //private void OnReceiveDownloadHistoricalDataParamMsg(MessageBase message)
+        //{
+        //    if (message is DownloadHistoricalDataParamMessage)
+        //    {
+        //        IsBusy = true;
+        //        CSVOutputSettings csvOutputSettings;
+        //        if (!(OutputSettings is CSVOutputSettings))
+        //            throw new Exception("Invalid output settings. Conversion to CSV is your only option.");
 
-                csvOutputSettings = OutputSettings as CSVOutputSettings;
+        //        csvOutputSettings = OutputSettings as CSVOutputSettings;
 
-                var downloadParam = message as DownloadHistoricalDataParamMessage;
+        //        var downloadParam = message as DownloadHistoricalDataParamMessage;
 
-                var d = new HistoricalDownloadParams();
+        //        var d = new HistoricalDownloadParams();
 
-                d.NumYears = downloadParam.NumYears;
-                d.OutputSettings = csvOutputSettings;
-                d.stockList = downloadParam.StockList;
+        //        d.NumYears = downloadParam.NumYears;
+        //        d.OutputSettings = csvOutputSettings;
+        //        d.stockList = downloadParam.StockList;
 
-                ShowCloseProgressDialogDelegate showProgressDelegate =
-                    () => { Messenger.Default.Send(new ShowProgressDialogMessage()); };
+        //        ShowCloseProgressDialogDelegate showProgressDelegate =
+        //            () => { Messenger.Default.Send(new ShowProgressDialogMessage()); };
 
-                ShowCloseProgressDialogDelegate closeProgressDelegate = () =>
-                {
-                    Messenger.Default.Send<ShowAppMessage, ProgressDialogViewModel>(
-                        new ShowAppMessage {MessageTitle = Path.GetFileName("Done!")});
-                };
+        //        ShowCloseProgressDialogDelegate closeProgressDelegate = () =>
+        //        {
+        //            Messenger.Default.Send<ShowAppMessage, ProgressDialogViewModel>(
+        //                new ShowAppMessage {MessageTitle = Path.GetFileName("Done!")});
+        //        };
 
-                // configure callbacks
-                d.StartDownloadProcess = () => { Application.Current.Dispatcher.Invoke(showProgressDelegate, null); };
-                d.BeforeStockDataDownloadCallback = s =>
-                {
-                    SendAppMessageDelegate msg = () =>
-                    {
-                        Messenger.Default.Send<ShowAppMessage, ProgressDialogViewModel>(
-                            new ShowAppMessage {MessageTitle = "Downloading " + s + "..."});
-                    };
-                    Application.Current.Dispatcher.Invoke(msg, null);
-                };
-                d.AfterStockDataDownloadCallback = s =>
-                {
-                    SendAppMessageDelegate msg = () =>
-                    {
-                        Messenger.Default.Send<ShowAppMessage, ProgressDialogViewModel>(
-                            new ShowAppMessage {MessageTitle = "Done."}
-                            );
-                    };
-                    Application.Current.Dispatcher.Invoke(msg, null);
-                };
+        //        // configure callbacks
+        //        d.StartDownloadProcess = () => { Application.Current.Dispatcher.Invoke(showProgressDelegate, null); };
+        //        d.BeforeStockDataDownloadCallback = s =>
+        //        {
+        //            SendAppMessageDelegate msg = () =>
+        //            {
+        //                Messenger.Default.Send<ShowAppMessage, ProgressDialogViewModel>(
+        //                    new ShowAppMessage {MessageTitle = "Downloading " + s + "..."});
+        //            };
+        //            Application.Current.Dispatcher.Invoke(msg, null);
+        //        };
+        //        d.AfterStockDataDownloadCallback = s =>
+        //        {
+        //            SendAppMessageDelegate msg = () =>
+        //            {
+        //                Messenger.Default.Send<ShowAppMessage, ProgressDialogViewModel>(
+        //                    new ShowAppMessage {MessageTitle = "Done."}
+        //                    );
+        //            };
+        //            Application.Current.Dispatcher.Invoke(msg, null);
+        //        };
 
-                d.OnExceptionCallback = e =>
-                {
-                    IsBusy = false;
-                    ShowCloseProgressDialogDelegate msg = () =>
-                    {
-                        closeProgressDelegate();
-                        Messenger.Default.Send<ShowAppMessage, MainWindow>(
-                            new ShowAppMessage {AppMessage = e.Message}
-                            );
-                    };
-                    Application.Current.Dispatcher.Invoke(msg, null);
-                };
+        //        d.OnExceptionCallback = e =>
+        //        {
+        //            IsBusy = false;
+        //            ShowCloseProgressDialogDelegate msg = () =>
+        //            {
+        //                closeProgressDelegate();
+        //                Messenger.Default.Send<ShowAppMessage, MainWindow>(
+        //                    new ShowAppMessage {AppMessage = e.Message}
+        //                    );
+        //            };
+        //            Application.Current.Dispatcher.Invoke(msg, null);
+        //        };
 
-                d.DownloadAllCompleteCallback = () =>
-                {
-                    IsBusy = false;
-                    Application.Current.Dispatcher.Invoke(closeProgressDelegate, null);
-                };
+        //        d.DownloadAllCompleteCallback = () =>
+        //        {
+        //            IsBusy = false;
+        //            Application.Current.Dispatcher.Invoke(closeProgressDelegate, null);
+        //        };
 
-                if (!Directory.Exists(d.OutputSettings.OutputDirectory))
-                {
-                    throw new Exception(d.OutputSettings.OutputDirectory + " does not exist!");
-                }
+        //        if (!Directory.Exists(d.OutputSettings.OutputDirectory))
+        //        {
+        //            throw new Exception(d.OutputSettings.OutputDirectory + " does not exist!");
+        //        }
 
-                var t = new Thread(DownloadHistoricalDataHelper.DownloadAndConvertHistoricalData);
-                t.Start(d);
-            }
-        }
+        //        var t = new Thread(DownloadHistoricalDataHelper.DownloadAndConvertHistoricalData);
+        //        t.Start(d);
+        //    }
+        //}
 
         private void OnConvert()
         {
