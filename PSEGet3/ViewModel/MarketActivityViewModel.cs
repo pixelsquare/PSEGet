@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using PSEGet3.Messages;
 using PSEGetLib.Data.Common.DataContracts;
 using PSEGetLib.Data.Service;
+using Microsoft.Practices.ServiceLocation;
 
 namespace PSEGet3.ViewModel
 {
@@ -33,7 +34,7 @@ namespace PSEGet3.ViewModel
         private double _totalForeignSelling;
         private int _tradedIssues;
         private int _unchanged;
-        protected PSEGetDataService marketSummaryService;
+        protected IPSEGetDataService marketSummaryService;
 
         /// <summary>
         ///     Initializes a new instance of the MarketActivityViewModel class.
@@ -53,7 +54,7 @@ namespace PSEGet3.ViewModel
             else
             {
                 // Code runs "for real": Connect to service, etc...
-                marketSummaryService = new PSEGetDataService();
+                marketSummaryService = ServiceLocator.Current.GetInstance<IPSEGetDataService>(); //new PSEGetDataService();
                 Messenger.Default.Register<TradeDateParamMessage>(this, OnRcvTradeDateParamMessage);
             }
         }

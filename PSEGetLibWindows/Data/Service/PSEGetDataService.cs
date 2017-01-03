@@ -14,14 +14,14 @@ namespace PSEGetLib.Data.Service
 {
     public class PSEGetDataService : IPSEGetDataService
     {
-        private readonly SQLiteConnection DbConnection = new SQLiteConnection();
+        private readonly SQLiteConnection DbConnection;
 
         public PSEGetDataService()
         {
             // Context = new psegetEntities();
             string connString = "data source=" + Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) +
                                 "\\pseget3.dat";
-            DbConnection.ConnectionString = connString;
+            DbConnection = new SQLiteConnection(connString);                                
         }
 
         public void GetIndexSummary(Action<IEnumerable<Stock>> getMarketSummaryCallback, DateTime tradeDate)

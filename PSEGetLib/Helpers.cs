@@ -5,8 +5,6 @@ using PSEGetLib.Converters;
 using PSEGetLib.DocumentModel;
 using System.IO;
 using System.Threading;
-using LateBindingHelper;
-using System.Diagnostics;
 using PSEGetLib.Interfaces;
 using Microsoft.Practices.ServiceLocation;
 

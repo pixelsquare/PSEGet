@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Yeahbah!")]
 [assembly: AssemblyProduct("PSEGet3")]
-[assembly: AssemblyCopyright("Copyright © 2005-2013 Arnold Diaz")]
+[assembly: AssemblyCopyright("Copyright © 2005-2017 Arnold Diaz")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -52,5 +52,5 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("3.0.0.7")]
-[assembly: AssemblyFileVersion("3.0.0.7")]
+[assembly: AssemblyVersion("3.1.0.0")]
+[assembly: AssemblyFileVersion("3.1.0.0")]

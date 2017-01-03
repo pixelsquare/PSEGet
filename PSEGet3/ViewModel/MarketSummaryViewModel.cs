@@ -9,6 +9,7 @@ using PSEGet3.Messages;
 using PSEGetLib.Data.Common.DataContracts;
 using PSEGetLib.Data.DesignService;
 using PSEGetLib.Data.Service;
+using Microsoft.Practices.ServiceLocation;
 
 namespace PSEGet3.ViewModel
 {
@@ -63,8 +64,7 @@ namespace PSEGet3.ViewModel
             else
             {
                 // Code runs "for real": Connect to service, etc...            
-                MarketSummaryService = new PSEGetDataService();
-                //LoadIndexSummary();
+                MarketSummaryService = ServiceLocator.Current.GetInstance<IPSEGetDataService>(); //new PSEGetDataService();                
                 RegisterCommands();
             }
         }

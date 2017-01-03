@@ -101,7 +101,7 @@ namespace PSEGet3.ViewModel
             SimpleIoc.Default.Register<ConverterViewModel>();
             SimpleIoc.Default.Register<ConvertFromFileViewModel>();
             SimpleIoc.Default.Register<DownloadAndConvertViewModel>();
-            //SimpleIoc.Default.Register<DownloadHistoricalDataViewModel>();
+            
             SimpleIoc.Default.Register<OutputSettingsViewModel>();
             SimpleIoc.Default.Register<MarketSummaryViewModel>();
             SimpleIoc.Default.Register<MessageWindowViewModel>();

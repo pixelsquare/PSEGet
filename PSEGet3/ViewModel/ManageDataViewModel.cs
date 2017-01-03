@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using PSEGet3.Messages;
 using PSEGetLib.Data.Service;
+using Microsoft.Practices.ServiceLocation;
 
 namespace PSEGet3.ViewModel
 {
@@ -56,7 +57,7 @@ namespace PSEGet3.ViewModel
 
         private void OnPurgeCommand()
         {
-            var dataService = new PSEGetDataService();
+            var dataService = ServiceLocator.Current.GetInstance<IPSEGetDataService>(); //new PSEGetDataService();
             dataService.PurgeData(_purgeDate);
             Messenger.Default.Send<ShowAppMessage, MainWindow>(
                 new ShowAppMessage {AppMessage = "Done Purging!"});

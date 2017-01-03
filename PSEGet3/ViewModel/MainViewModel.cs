@@ -1,4 +1,8 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using PSEGet3.Messages;
+using System.Windows;
 
 namespace PSEGet3.ViewModel
 {
@@ -21,14 +25,34 @@ namespace PSEGet3.ViewModel
         /// </summary>
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            if (IsInDesignMode)
+            {
+                // Code runs in Blend --> create design time data.
+            }
+            else
+            {
+                // Code runs "for real"
+                TerminateCommand = new RelayCommand(() => Application.Current.Shutdown());
+                ConvertCommand = new RelayCommand(
+                    () => Messenger.Default.Send(new ExecuteConvertCommandMessage()));
+
+                // message 0 terminates the application
+                Messenger.Default.Register<int>(this,
+                    p =>
+                    {
+                        if (p == 0)
+                        {
+                            //Messenger.Default.Send<SaveOutputSettingsMessage, OutputSettingsViewModel>
+                            //    (new SaveOutputSettingsMessage());
+                            //this.SaveAppConfiguration();
+                            TerminateCommand.Execute(null);
+                        }
+                    });
+            }
         }
+
+        public RelayCommand TerminateCommand { get; private set; }
+
+        public RelayCommand ConvertCommand { get; private set; }
     }
 }

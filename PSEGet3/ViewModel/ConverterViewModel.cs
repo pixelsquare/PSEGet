@@ -15,6 +15,8 @@ using PSEGetLib.Converters;
 using PSEGetLib.Data.Service;
 using PSEGetLib.DocumentModel;
 using MessageBox = System.Windows.Forms.MessageBox;
+using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Practices.ServiceLocation;
 
 namespace PSEGet3.ViewModel
 {
@@ -213,13 +215,12 @@ namespace PSEGet3.ViewModel
                 };
 
                 param.ProgressCallback = (reportFilename, pseDocument) =>
-                {
-                    // save to database
-                    var dataService = new PSEGetDataService();
-                    dataService.SaveTradeData(pseDocument);
+                {                                   
+                    Application.Current.Dispatcher.Invoke(() =>
+                     {
+                        var dataService = ServiceLocator.Current.GetInstance<IPSEGetDataService>(); //new PSEGetDataService();
+                        dataService.SaveTradeData(pseDocument);
 
-                    Action appMessageAction = () =>
-                    {
                         Messenger.Default.Send<ShowAppMessage, ProgressDialogViewModel>(
                             new ShowAppMessage
                             {
@@ -227,8 +228,7 @@ namespace PSEGet3.ViewModel
                                 AppMessage = "Converted " + Path.GetFileName(reportFilename)
                             }
                             );
-                    };
-                    Application.Current.Dispatcher.Invoke(appMessageAction);
+                      });
                 };
 
                 param.ExceptionCallback = e =>
@@ -381,7 +381,7 @@ namespace PSEGet3.ViewModel
                 param.ConvertCompleteCallback =
                     (s, pseDocument) =>
                     {
-                        var dataService = new PSEGetDataService();
+                        var dataService = ServiceLocator.Current.GetInstance<IPSEGetDataService>(); //new PSEGetDataService();
                         dataService.SaveTradeData(pseDocument);
 
                         Action appMessageAction = () =>

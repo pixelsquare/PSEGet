@@ -71,7 +71,7 @@ namespace PSEGet3
         private void MainWindow_ClosingHandler(object sender, CancelEventArgs e)
         {
             Messenger.Default.Send(new CloseWindowMessage());
-            SaveAppConfiguration();
+            SaveAppConfiguration();            
         }
 
         private void SaveAppConfiguration()
