@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("pseget")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("State of Utah")]
+[assembly: AssemblyCompany("Yeahbah!")]
 [assembly: AssemblyProduct("pseget")]
-[assembly: AssemblyCopyright("Copyright © State of Utah 2016")]
+[assembly: AssemblyCopyright("Copyright © Yeahbah! 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
