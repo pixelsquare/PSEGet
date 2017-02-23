@@ -19,3 +19,20 @@ Release/
 .vs/PSEGet3/v14/.suo
 Console/PSEGetConsole/pseget/bin/
 Console/PSEGetConsole/pseget/obj/
+
+# Created by https://www.gitignore.io/api/monodevelop
+
+### MonoDevelop ###
+#User Specific
+*.userprefs
+*.usertasks
+
+#Mono Project Files
+*.pidb
+*.resources
+test-results/
+
+# End of https://www.gitignore.io/api/monodevelop
+Mac/PSEGetc/psegetc/psegetc/bin/Debug
+Mac/PSEGetc/psegetc/psegetc/obj/x86/Debug
+PSEGetLibMono/obj/Debug

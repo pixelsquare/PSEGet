@@ -10,7 +10,7 @@ namespace PSEGetLib.Service
     {
         public string ExtractTextFromPdf(string filePath)
         {
-            ITextExtractionStrategy its = new iTextSharp.text.pdf.parser.SimpleTextExtractionStrategy();
+            //ITextExtractionStrategy its = new iTextSharp.text.pdf.parser.SimpleTextExtractionStrategy();
 
             using (PdfReader reader = new PdfReader(filePath))
             {

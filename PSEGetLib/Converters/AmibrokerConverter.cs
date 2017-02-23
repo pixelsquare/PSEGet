@@ -74,7 +74,7 @@ namespace PSEGetLib.Converters
         private void SetAmibrokerData(IOperationInvoker amiInvoker, PSEDocument pseDocument,
             StockBase stockData, AmiOutputSettings amiOutputSettings)
         {
-            int version = Convert.ToInt32(amiInvoker.Property("Version").Get<string>().Replace(".", string.Empty));
+            //int version = Convert.ToInt32(amiInvoker.Property("Version").Get<string>().Replace(".", string.Empty));
 
             // stocks collection
             IOperationInvoker stocks = amiInvoker.Property("Stocks").Get<IOperationInvoker>();

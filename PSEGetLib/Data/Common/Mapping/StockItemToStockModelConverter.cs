@@ -10,7 +10,7 @@ namespace PSEGetLib.Data.Common.Mapping
             where TTarget : class
         {
             var src = source as StockItem;
-            var tgt = target as Stock;
+            //var tgt = target as Stock;
 
             var stock = new Stock();
             stock.Symbol = src.Symbol;

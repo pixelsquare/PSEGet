@@ -38,8 +38,8 @@ namespace PSEGetLib
             SavePath = savePath;
             OnReportDownloadCompletedEvent = downloadCompletedEvent;
 
-            wc.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
-            wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChange);
+            wc.DownloadFileCompleted += wc_DownloadFileCompleted;
+            wc.DownloadProgressChanged += wc_DownloadProgressChange;
         }
 
         public ReportDownloader(DownloadParams downloadParams, string savePath,
@@ -152,7 +152,11 @@ namespace PSEGetLib
                     wc.DownloadFileAsync(new Uri(downloadParams.ToString()), CurrentDownloadFile);
                 else
                 {
-                    wc.DownloadFile(new Uri(downloadParams.ToString()), CurrentDownloadFile);
+
+					wc.DownloadFile(new Uri(downloadParams.ToString()), CurrentDownloadFile);
+
+					// since we are in blocking mode we have to set success explicitly
+					DownloadedFiles.Last().Success = true;
                     ProcessQueue();
                 }
             }
