@@ -27,6 +27,7 @@ namespace PSEGetLib.DocumentModel
         public const string SME = "^SME";
         public const string DEPOSITORY_RECEIPTS = "^DEPOSITARY";
         public const string ETF = "^ETF";
+        public const string DOLLAR_DONOMINATED_SECURITIES = "^DDS";
 
         private Hashtable _sectorHash = new Hashtable();
         private DateTime _tradeDate;
@@ -56,6 +57,7 @@ namespace PSEGetLib.DocumentModel
         {
             var _reportChangeDate1 = new DateTime(2013, 11, 6);
             var _reportChangeDate2 = new DateTime(2013, 12, 3);
+            var _reportChangeDate3 = new DateTime(2017, 4, 4);
 
             // this is the order in which the sectors appears on the report
             this._sectorHash.Add(0, FINANCIAL);
@@ -74,6 +76,8 @@ namespace PSEGetLib.DocumentModel
                 this._sectorHash.Add(11, SME);
                 if (DateTime.Compare(_tradeDate, _reportChangeDate2) >= 0)
                     this._sectorHash.Add(12, ETF);
+                if (DateTime.Compare(_tradeDate, _reportChangeDate3) >= 0)
+                    this._sectorHash.Add(13, DOLLAR_DONOMINATED_SECURITIES);
             }
             else
             {
@@ -93,16 +97,16 @@ namespace PSEGetLib.DocumentModel
             this.Sectors.Add(new SectorItem(this) { Symbol = PROPERTY });
             this.Sectors.Add(new SectorItem(this) { Symbol = SERVICE });
             this.Sectors.Add(new SectorItem(this) { Symbol = MINING_OIL });
-
-            this.Sectors.Add(new SectorItem(this) { Symbol = PSEI });
-            //-
-            this.Sectors.Add(new SectorItem(this) { Symbol = ALLSHARES });
             this.Sectors.Add(new SectorItem(this) { Symbol = SME });
-            this.Sectors.Add(new SectorItem(this) { Symbol = ETF }); 
+            this.Sectors.Add(new SectorItem(this) { Symbol = ETF });
+            this.Sectors.Add(new SectorItem(this) { Symbol = PSEI });
+            this.Sectors.Add(new SectorItem(this) { Symbol = ALLSHARES });
+            //-
 
             this.Sectors.Add(new SectorItem(this) { Symbol = PREFERRED });
             this.Sectors.Add(new SectorItem(this) { Symbol = DEPOSITORY_RECEIPTS });
-            this.Sectors.Add(new SectorItem(this) { Symbol = WARRANT });   
+            this.Sectors.Add(new SectorItem(this) { Symbol = WARRANT });
+            this.Sectors.Add(new SectorItem(this) { Symbol = DOLLAR_DONOMINATED_SECURITIES });
                     
         }
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGet3", "PSEGet3\PSEGet3.csproj", "{C55A5C06-CB72-408E-95EA-913E483ACE52}"
 EndProject
@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{9661
 		..\..\..\..\My Programs\SQLite.Net\Net45\x64\System.Data.SQLite.dll = ..\..\..\..\My Programs\SQLite.Net\Net45\x64\System.Data.SQLite.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetC", "Console\PSEGetConsole\pseget\PSEGetC.csproj", "{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetC", "Console\PSEGetConsole\pseget\PSEGetC.csproj", "{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,18 +82,18 @@ Global
 		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|x64.Build.0 = Release|x64
 		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|x86.ActiveCfg = Release|x86
 		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|x86.Build.0 = Release|x86
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Debug|x64.Build.0 = Debug|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Debug|x86.Build.0 = Debug|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Release|x64.ActiveCfg = Release|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Release|x64.Build.0 = Release|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Release|x86.ActiveCfg = Release|Any CPU
-		{04B307BF-A3CC-4FD0-A6F6-3C0D2A1BA7FB}.Release|x86.Build.0 = Release|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Debug|x64.Build.0 = Debug|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Debug|x86.Build.0 = Debug|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Release|x64.ActiveCfg = Release|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Release|x64.Build.0 = Release|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Release|x86.ActiveCfg = Release|Any CPU
+		{9AC7FE87-BA2E-430D-B85E-38B2B5B6F32A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

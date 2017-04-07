@@ -25,6 +25,7 @@ namespace PSEGetLib
         private DateTime _tradeDate;
         private DateTime _reportChangeDate1 = new DateTime(2013, 11, 6); 
         private DateTime _reportChangeDate2 = new DateTime(2013, 12, 3);
+        private DateTime _reportChangeDate3 = new DateTime(2017, 4, 4);
         private List<String> _pseReportString;
         private StringCollection reportBody = new StringCollection();
         private StringCollection sectorSummary = new StringCollection();
@@ -89,6 +90,8 @@ namespace PSEGetLib
                 sectorNameMap.Add(PSEDocument.SME, "S M A L L   &   M E D I U M   E N T E R P R I S E S");
                 if (DateTime.Compare(_tradeDate, _reportChangeDate2) >= 0)
                     sectorNameMap.Add(PSEDocument.ETF, "E X C H A N G E   T R A D E D   F U N D S");
+                if (DateTime.Compare(_tradeDate, _reportChangeDate2) >= 0)
+                    sectorNameMap.Add(PSEDocument.DOLLAR_DONOMINATED_SECURITIES, "D O L L A R D E N O M I N A T E D S E C U R I T I E S");
             }
             else
             {                
@@ -503,6 +506,9 @@ namespace PSEGetLib
 
                     if (DateTime.Compare(_tradeDate, _reportChangeDate2) >= 0)
                         parseCondition = parseCondition || s == sectorNameMap[PSEDocument.ETF];
+
+                    if (DateTime.Compare(_tradeDate, _reportChangeDate3) >= 0)
+                        parseCondition = parseCondition || s == sectorNameMap[PSEDocument.DOLLAR_DONOMINATED_SECURITIES];
 
                     if (parseCondition)
                     {
