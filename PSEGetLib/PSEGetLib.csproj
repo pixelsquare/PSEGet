@@ -100,8 +100,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp">
-      <HintPath>..\packages\iTextSharp.5.5.9\lib\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.11\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="LateBindingHelper">
       <HintPath>..\ExternalLib\LateBindingHelper.dll</HintPath>
@@ -155,6 +156,7 @@
     <Compile Include="Interfaces\IPdfService.cs" />
     <Compile Include="Interfaces\IPSEReportReader.cs" />
     <Compile Include="Interfaces\IReportDownloader.cs" />
+    <Compile Include="PSEReportReader2.cs" />
     <Compile Include="ReportDownloaderAync2.cs" />
     <Compile Include="Service\AmibrokerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

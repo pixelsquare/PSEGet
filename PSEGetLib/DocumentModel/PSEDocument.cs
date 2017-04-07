@@ -203,6 +203,16 @@ namespace PSEGetLib.DocumentModel
             set;
         }
 
+        public ulong BlockSaleVolume
+        {
+            get; set;
+        }
+
+        public double BlockSaleValue
+        {
+            get; set;
+        }
+
         public ulong MainCrossVolume
         {
             get;
