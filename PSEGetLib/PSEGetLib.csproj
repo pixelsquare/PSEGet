@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PSEGetLib</RootNamespace>
     <AssemblyName>PSEGetLib</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
     <SccLocalPath>Svn</SccLocalPath>
@@ -151,6 +151,7 @@
     <Compile Include="DownloadAndConvertHelper.cs" />
     <Compile Include="DownloadHistoricalDataHelper.cs" />
     <Compile Include="DownloadParams.cs" />
+    <Compile Include="EUnsupportedReportFormat.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\IAmibrokerService.cs" />
     <Compile Include="Interfaces\IPdfService.cs" />
@@ -161,7 +162,6 @@
     <Compile Include="Service\AmibrokerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PSEGetException.cs" />
-    <Compile Include="PSEReportReader.cs" />
     <Compile Include="ReportDownloader.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HostOS.cs" />

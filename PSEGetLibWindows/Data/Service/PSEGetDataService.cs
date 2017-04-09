@@ -38,7 +38,7 @@ namespace PSEGetLib.Data.Service
          	                (SELECT B.CLOSE FROM TRADETAB B WHERE B.SYMBOL = C.SYMBOL AND B.TRADEDATE < C.TRADEDATE ORDER BY B.TRADEDATE DESC LIMIT 1)) * 100
                          ) AS PCTCHG 
                          FROM TRADETAB C WHERE SYMBOL LIKE '^%'
-                         AND TRADEDATE = ? AND NOT SYMBOL IN ('^WARRANT', '^SME', '^PREFERRED', '^DEPOSITARY', '^ETF') ";
+                         AND TRADEDATE = ? AND NOT SYMBOL IN ('^WARRANT', '^SME', '^PREFERRED', '^DEPOSITARY', '^ETF', '^DDS', '^DEPOSITARY') ";
 
                 var cmd = new SQLiteCommand(sql, DbConnection);
                 cmd.Parameters.Add("TRADEDATE", DbType.String).Value = tradeDate.ToString("yyyy-MM-dd");
@@ -330,11 +330,12 @@ namespace PSEGetLib.Data.Service
 			                /
          	                (SELECT B.CLOSE FROM TRADETAB B WHERE B.SYMBOL = C.SYMBOL AND B.TRADEDATE < C.TRADEDATE ORDER BY B.TRADEDATE DESC LIMIT 1)) * 100
                          ) AS PCTCHG 
-                         FROM TRADETAB C WHERE C.TRADEDATE = ? AND C.SYMBOL NOT LIKE '^%' AND C.CLOSE <> 0  AND C.VALUE > 2000000";
+                         FROM TRADETAB C 
+                         WHERE C.TRADEDATE = @TRADEDATE AND C.SYMBOL NOT LIKE '^%' AND C.CLOSE <> 0  AND C.VALUE > 2000000";
 
             var cmd = new SQLiteCommand(sql, DbConnection);
-            cmd.Parameters.Add("@TRADEDATE", DbType.String).Value = tradeDate.ToString("yyyy-MM-dd");
-
+            cmd.Parameters.Add("@TRADEDATE", DbType.String).Value = tradeDate.ToString("yyyy-MM-dd");            
+            cmd.Prepare();
             DbConnection.Open();
             try
             {
@@ -394,12 +395,15 @@ namespace PSEGetLib.Data.Service
                     foreach (string s in l)
                     {
                         string[] row = s.Split(new[] {' '});
-                        var b = new BlockSaleModel();
-                        b.Symbol = row[0];
-                        b.Price = row[1];
-                        b.Volume = row[2];
-                        b.Value = row[3];
-                        marketActivity.BlockSales.Add(b);
+                        if (row.Length == 4)
+                        {
+                            var b = new BlockSaleModel();
+                            b.Symbol = row[0].Trim();
+                            b.Price = row[1].Trim();
+                            b.Volume = row[2].Trim();
+                            b.Value = row[3].Trim();
+                            marketActivity.BlockSales.Add(b);
+                        }
                     }
                 }
                 getMarketActivityCallback(marketActivity);

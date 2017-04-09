@@ -75,8 +75,8 @@ namespace pseget
         {
             IPdfService pdfService = new PdfTextSharpService();
             var pseDocument = new PSEDocument();
-            IPSEReportReader reader = new PSEReportReader(pdfService.ExtractTextFromPdf(fileToConvert));
-            reader.Fill(pseDocument);
+            IPSEReportReader reader = new PSEReportReader2();
+            reader.Fill(pseDocument, pdfService.ExtractTextFromPdf(fileToConvert));
             if (_outputFormat.Contains("csv"))
             {
                 string[] csvParam = _outputFormat.Split(':');

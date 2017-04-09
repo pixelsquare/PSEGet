@@ -25,15 +25,15 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="70" />
-                <ColumnDefinition Width="90" />
-                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="95" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <!--<RowDefinition />
+                <RowDefinition />-->
             </Grid.RowDefinitions>
             <Border Grid.Column="0">
                 <Label Content="Advances" />
@@ -63,7 +63,7 @@
                 </Label>
             </Border>
 
-            <Border Grid.Row="3">
+            <!--<Border Grid.Row="3">
                 <Label Content="Traded Issues" Grid.Row="3" />
             </Border>
 
@@ -71,16 +71,16 @@
                 <Label HorizontalContentAlignment="Right">
                     <TextBlock Text="{Binding TradedIssues, StringFormat={}{0:#\,###}}" />
                 </Label>
-            </Border>
+            </Border>-->
 
-            <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Grid.Row="4">
+            <!--<Border BorderThickness="0 0 0 1" BorderBrush="LightGray" Grid.Row="4">
                 <Label Content="Number of Trades" Grid.Row="4" />
             </Border>
             <Border Grid.Row="5" Grid.Column="1">
                 <Label HorizontalContentAlignment="Right">
                     <TextBlock Text="{Binding NumTrades, StringFormat={}{0:#\,###}}" />
                 </Label>
-            </Border>
+            </Border>-->
 
             <Border Grid.Row="0" Grid.Column="2">
                 <Label Content="Grand Total" Grid.Row="5" />
@@ -109,7 +109,7 @@
                 </Label>
             </Border>
 
-            <Border Grid.Row="3" Grid.Column="2">
+            <!--<Border Grid.Row="3" Grid.Column="2">
                 <Label Content="Cross Volume" Grid.Row="8" />
             </Border>
             <Border Grid.Row="3" Grid.Column="3">
@@ -125,10 +125,10 @@
                 <Label HorizontalContentAlignment="Right">
                     <TextBlock Text="{Binding MainBoardCrossValue, StringFormat={}{0:#\,###}}" />
                 </Label>
-            </Border>
+            </Border>-->
         </Grid>
         <Label Content="Block Sales" FontWeight="Bold" />
-        <DataGrid ItemsSource="{Binding BlockSales}" Height="70">
+        <DataGrid ItemsSource="{Binding BlockSales}" Height="120">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Symbol" Width="60" Binding="{Binding Symbol}" />
                 <DataGridTextColumn Header="Price" Width="70" Binding="{Binding Price}" />

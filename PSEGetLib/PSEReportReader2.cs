@@ -54,6 +54,9 @@ namespace PSEGetLib
 			nfs = matches[1].Groups[3].Value.ParseDouble();
 			SectorItem psei = _pseDocument.GetSector(PSEDocument.PSEI);
 			psei.NetForeignBuy = Math.Round((double)nfb - (double)nfs, 2);
+
+            _pseDocument.TotalForeignBuying = (double)nfb;
+            _pseDocument.TotalForeignSelling = (double)nfs;           
 		}
 
 		private void ParseReportMisc()

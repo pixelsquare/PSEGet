@@ -264,16 +264,10 @@ namespace PSEGet3.ViewModel
                 ShowCloseProgressDialogDelegate showMarketSummaryTab = () =>
                 {
                     Messenger.Default.Send(
-                        new ShowMarketSummaryMessage {TradeDate = pseDocument.TradeDate});
-
-                    string noticeText = "";
-                    foreach (string s in pseDocument.ExchangeNotice)
-                    {
-                        noticeText += s;
-                    }
+                        new ShowMarketSummaryMessage {TradeDate = pseDocument.TradeDate});                    
 
                     Messenger.Default.Send(
-                        new ShowExchangeNoticeMessage {NoticeText = noticeText}
+                        new ShowExchangeNoticeMessage {NoticeText = pseDocument.ExchangeNotice }
                         );
                 };
                 Application.Current.Dispatcher.Invoke(showMarketSummaryTab, null);

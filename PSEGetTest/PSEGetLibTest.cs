@@ -76,11 +76,11 @@ namespace PSEGetTest
             //PDFTextStripper stripper = new PDFTextStripper();
             var pdfSharpService = new PdfTextSharpService();
 
-            PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
+            var reader = new PSEReportReader2();
 
-            string expected = "The Philippine Stock Exchange, Inc";
-            string actual = reader.PSEReportString[0].Trim();
-            Assert.AreEqual(expected, actual);           
+            //string expected = "The Philippine Stock Exchange, Inc";
+            //string actual = reader.PSEReportString[0].Trim();
+            //Assert.AreEqual(expected, actual);           
         }
 
         //[TestMethod]
@@ -100,10 +100,10 @@ namespace PSEGetTest
         {
             //PDFTextStripper stripper = new PDFTextStripper();
             var pdfSharpService = new PdfTextSharpService();
-            PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
+            var reader = new PSEReportReader2();
 
             PSEDocument pd = new PSEDocument();
-            reader.Fill(pd);
+            reader.Fill(pd, pdfSharpService.ExtractTextFromPdf(pdfDocPath));
 
             DateTime expected = DateTime.Parse("05/05/2016");
             DateTime actual = pd.TradeDate;
@@ -233,10 +233,10 @@ namespace PSEGetTest
         {
             //PDFTextStripper stripper = new PDFTextStripper();
             var pdfSharpService = new PdfTextSharpService();
-            PSEReportReader reader = new PSEReportReader(pdfSharpService.ExtractTextFromPdf(pdfDocPath));
+            var reader = new PSEReportReader2();
 
             PSEDocument pd = new PSEDocument();
-            reader.Fill(pd);
+            reader.Fill(pd, pdfSharpService.ExtractTextFromPdf(pdfDocPath));
 
             //Bid Ask Open High Low Close Volume Value NFB/S
 
@@ -594,10 +594,10 @@ namespace PSEGetTest
         {
             //PDFTextStripper stripper = new PDFTextStripper();
             IPdfService pdfService = new PdfTextSharpService();
-            var reader = new PSEReportReader(pdfService.ExtractTextFromPdf(pdfDocPath));
+            var reader = new PSEReportReader2();
 
             var pd = new PSEDocument();
-            reader.Fill(pd);
+            reader.Fill(pd, pdfService.ExtractTextFromPdf(pdfDocPath));
             
             // psei
             SectorItem psei = pd.GetSector(PSEDocument.PSEI);
