@@ -68,28 +68,14 @@ namespace PSEGetLib.Converters
             WriteToFile(csvOutput);
         }
 
-        protected void WriteToFile(IEnumerable<string> csvLines)
+        protected void WriteToFile(List<string> csvLines)
         {
             // write to file
             string filename = this.OutputSettings.OutputDirectory + Helpers.GetDirectorySeparator() +
                                     this.OutputSettings.Filename;
 
-            using (StreamWriter writer = new StreamWriter(filename))
-            {
-                try
-                {
-                    foreach (string item in csvLines)
-                    {
-                        writer.WriteLine(item);
-                    }
-                }
-                finally
-                {
-                    writer.Flush();
-                    writer.Close();
-                }
-            };
-            
+			File.WriteAllLines(filename, csvLines.ToArray());
+			                        
         }
 
         public void Execute(PSEDocument pseDocument, CSVOutputSettings csvOutputSettings)

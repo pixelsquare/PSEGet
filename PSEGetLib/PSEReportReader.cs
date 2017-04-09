@@ -9,17 +9,6 @@ using System.Globalization;
 
 namespace PSEGetLib
 {
-    public class EUnsupportedReportFormat : Exception
-    {
-        public override string Message
-        {
-            get
-            {
-                return "Unsupported report format. Quotation reports prior to Aug. 6, 2010 are not supported";
-            }
-        }
-    }
-
     public class PSEReportReader : IPSEReportReader
     {
         private DateTime _tradeDate;

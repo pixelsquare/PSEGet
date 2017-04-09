@@ -31,9 +31,10 @@ namespace PSEGetLib
             IPdfService pdfService = ServiceLocator.Current.GetInstance<IPdfService>(); 
             string pdfText = pdfService.ExtractTextFromPdf(fullFilePath);
 
-            var reader = new PSEReportReader(pdfText);
+            
             var document = new PSEDocument();
-            reader.Fill(document);
+			var reader = new PSEReportReader2();
+			reader.Fill(document, pdfText);
 
             if (outputSettings is CSVOutputSettings)
             {

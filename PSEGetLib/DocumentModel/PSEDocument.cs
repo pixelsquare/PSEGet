@@ -23,10 +23,7 @@ namespace PSEGetLib.DocumentModel
         public const string SME = "^SME";
         public const string DEPOSITORY_RECEIPTS = "^DEPOSITARY";
         public const string ETF = "^ETF";
-        public const string DOLLAR_DONOMINATED_SECURITIES = "^DDS";
-
-        //private Hashtable _sectorHash = new Hashtable();
-        private DateTime _tradeDate;
+        public const string DOLLAR_DONOMINATED_SECURITIES = "^DDS";		       
 
         public PSEDocument()
         {
@@ -47,64 +44,7 @@ namespace PSEGetLib.DocumentModel
         public void ToMetaStock(MetaOutputSettings metaOutputSettings)
         {
             Converter.Convert<MetaOutputSettings>(this, metaOutputSettings);
-        }
-
-        //private void InitSectors()
-        //{
-        //    var _reportChangeDate1 = new DateTime(2013, 11, 6);
-        //    var _reportChangeDate2 = new DateTime(2013, 12, 3);
-        //    var _reportChangeDate3 = new DateTime(2017, 4, 4);
-
-        //    // this is the order in which the sectors appears on the report
-        //    this._sectorHash.Add(0, FINANCIAL);
-        //    this._sectorHash.Add(1, INDUSTRIAL);
-        //    this._sectorHash.Add(2, HOLDING);
-        //    this._sectorHash.Add(3, PROPERTY);
-        //    this._sectorHash.Add(4, SERVICE);
-        //    this._sectorHash.Add(5, MINING_OIL);
-        //    if (DateTime.Compare(_tradeDate, _reportChangeDate1) >= 0)
-        //    {                
-        //        this._sectorHash.Add(6, PSEI);
-        //        this._sectorHash.Add(7, ALLSHARES);
-        //        this._sectorHash.Add(8, PREFERRED);
-        //        this._sectorHash.Add(9, DEPOSITORY_RECEIPTS);
-        //        this._sectorHash.Add(10, WARRANT);
-        //        this._sectorHash.Add(11, SME);
-        //        if (DateTime.Compare(_tradeDate, _reportChangeDate2) >= 0)
-        //            this._sectorHash.Add(12, ETF);
-        //        if (DateTime.Compare(_tradeDate, _reportChangeDate3) >= 0)
-        //            this._sectorHash.Add(13, DOLLAR_DONOMINATED_SECURITIES);
-        //    }
-        //    else
-        //    {
-        //        this._sectorHash.Add(6, PSEI);
-        //        this._sectorHash.Add(7, ALLSHARES);
-        //        this._sectorHash.Add(8, PREFERRED);
-        //        this._sectorHash.Add(9, WARRANT);
-        //        this._sectorHash.Add(10, SME);
-        //        this._sectorHash.Add(11, DEPOSITORY_RECEIPTS);
-        //    }
-
-        //    // this is the order in which the sectors are printed in the sectory summary section
-        //    // of the report
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = FINANCIAL });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = INDUSTRIAL });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = HOLDING });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = PROPERTY });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = SERVICE });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = MINING_OIL });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = SME });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = ETF });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = PSEI });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = ALLSHARES });
-        //    //-
-
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = PREFERRED });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = DEPOSITORY_RECEIPTS });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = WARRANT });
-        //    this.Sectors.Add(new SectorItem(this) { Symbol = DOLLAR_DONOMINATED_SECURITIES });
-                    
-        //}
+        }	       
 
         public SectorItem GetSector(String symbol)
         {
@@ -116,11 +56,6 @@ namespace PSEGetLib.DocumentModel
 
             return sectorItem;
         }
-
-        //public SectorItem GetSector(int index)
-        //{
-        //    return this.GetSector(this._sectorHash[index].ToString());
-        //}
 
         public StockItem GetStock(string symbol)
         {
@@ -149,14 +84,8 @@ namespace PSEGetLib.DocumentModel
 
         public DateTime TradeDate
         {
-            get { return _tradeDate; }
-            set 
-            { 
-                _tradeDate = value;
-
-                // sector order is dependent on the trade date
-                //InitSectors(); 
-            }
+			get;
+			set;
         }
 
         public int NumAdvance

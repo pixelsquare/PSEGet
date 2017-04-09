@@ -30,6 +30,9 @@ namespace PSEGetLib
             InitSectors();
 
 			pseDocument.TradeDate = GetTradeDate();
+			if (pseDocument.TradeDate.CompareTo(new DateTime(2017, 4, 4)) < 0)
+				throw new EUnsupportedReportFormat("Unsupported report format. Quotation reports prior to April 6, 2017 are not supported.");
+			
 			CleanupReportString();
 
 			ParseReportBody();
@@ -51,22 +54,6 @@ namespace PSEGetLib
 			nfs = matches[1].Groups[3].Value.ParseDouble();
 			SectorItem psei = _pseDocument.GetSector(PSEDocument.PSEI);
 			psei.NetForeignBuy = Math.Round((double)nfb - (double)nfs, 2);
-
-			//calculate sector netforeign buying/selling
-			// TODO: make this internal
-			foreach (SectorItem sectorItem in _pseDocument.Sectors)
-			{
-				if (sectorItem.Symbol == "^PSEi")
-					continue;
-				sectorItem.NetForeignBuy = 0;
-				foreach (SubSectorItem subSectorItem in sectorItem.SubSectors)
-				{
-					foreach (StockItem stockItem in subSectorItem.Stocks)
-					{
-						sectorItem.NetForeignBuy += stockItem.NetForeignBuy;
-					}
-				}
-			}
 		}
 
 		private void ParseReportMisc()
@@ -118,7 +105,10 @@ namespace PSEGetLib
 			matchGroup = matches[1].Groups;
 			_pseDocument.BlockSaleValue = matchGroup[2].Value == "VALUE" ? double.Parse(matchGroup[4].Value, NumberStyles.Any) : 0;
 
-			// TODO: parse block sale
+			// parse block sale
+			pattern = @"((BLOCK SALES\s)([\w\d\s,.\(\):])+)(S E C T O R A L   S U M M A R Y)";
+			Match m = Regex.Match(_reportString, pattern);
+			_pseDocument.BlockSales = m.Groups[1].Value;
 		}
 
 		private void ParseSectorSummary()
@@ -183,14 +173,24 @@ namespace PSEGetLib
 			SubSectorItem subSector = null;
 			foreach (var line in lines)
 			{				
+
+				// end of the line
+				var pattern = @"(TOTAL MAIN BOARD.+\s+)(.+)";
+				if (Regex.Match(line, pattern).Success)
+					break;
+				
 				// create the sector object
-				var pattern = @"\b([A-Z&\.,]\s+)+([A-Z])\b";
+			    pattern = @"\b([A-Z&\.,]\s+)+([A-Z])\b";
 				Match sectorTextMatch = Regex.Match(line, pattern);
 				if (sectorTextMatch.Success)
 				{
 					var sectorKey = sectorNameMap.GetKey(sectorTextMatch.Value);
 					Debug.Assert(sectorKey != null, "Unable to locate sector key" + sectorTextMatch.Value);
 					sector = _pseDocument.GetSector(sectorKey);
+
+					// not all sectors have sub-sectors. 
+					// we have to null this to make sure stocks don't get mixed up in other sectors
+					subSector = null; 
 					continue;
 				}
 
@@ -213,15 +213,34 @@ namespace PSEGetLib
 				{
 					// found the stock line
 					Debug.Assert(sector != null, "Unable to initialize the sector object.");
-					Debug.Assert(subSector != null, "Unable to initialize the sub sector object.");
+
+					if (subSector == null)
+					{
+						// not all sectors have sub-sectors so we create a default
+						subSector = new SubSectorItem();
+						subSector.Name = "DEFAULT";
+						sector.SubSectors.Add(subSector);
+					}
+
 					StockItem stock = ParseStockLine(line, sector);
 					subSector.Stocks.Add(stock);
 				}
 
-				// end of the line
-				pattern = @"(TOTAL MAIN BOARD.+\s+)(.+)";
-				if (Regex.Match(line, pattern).Success)
-					break;
+			}
+
+			//calculate sector netforeign buying/selling
+			foreach (SectorItem sectorItem in _pseDocument.Sectors)
+			{
+				if (sectorItem.Symbol == "^PSEi")
+					continue;
+				sectorItem.NetForeignBuy = 0;
+				foreach (SubSectorItem subSectorItem in sectorItem.SubSectors)
+				{
+					foreach (StockItem stockItem in subSectorItem.Stocks)
+					{
+						sectorItem.NetForeignBuy += stockItem.NetForeignBuy;
+					}
+				}
 			}
 		}
 
@@ -262,6 +281,16 @@ namespace PSEGetLib
 			stock.Bid = doubleValue.HasValue ? (double)doubleValue : 0;
 
 			stock.Symbol = stockInfo[9];
+
+			// build the stock description
+			int index = 9;
+			var stockDescription = string.Empty;
+            for (int i = stockInfo.Length - 1; i > index; i--)
+            {
+				stockDescription = stockDescription + stockInfo[i] + " ";
+            }
+
+			stock.Description = stockDescription.Trim();
 
 			return stock;
 		}

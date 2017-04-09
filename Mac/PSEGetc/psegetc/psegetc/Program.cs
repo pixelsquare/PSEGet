@@ -39,7 +39,7 @@ namespace psegetc
 		}
 
 		static void WorkIt()
-		{
+		{			
 			if (_targetPath == null)
 			{
 				throw new Exception("Error: Unspecified PSE report file path.");
@@ -65,7 +65,7 @@ namespace psegetc
 
 			}
 			else
-			{
+			{				
 				ConvertIt(_targetPath);
 			}
 
@@ -75,8 +75,8 @@ namespace psegetc
 		{
 			IPdfService pdfService = new PdfTextSharpService();
 			var pseDocument = new PSEDocument();
-			IPSEReportReader reader = new PSEReportReader(pdfService.ExtractTextFromPdf(fileToConvert));
-			reader.Fill(pseDocument);
+			IPSEReportReader reader = new PSEReportReader2();
+			reader.Fill(pseDocument, pdfService.ExtractTextFromPdf(fileToConvert));
 			if (_outputFormat.Contains("csv"))
 			{
 				string[] csvParam = _outputFormat.Split(':');
@@ -107,28 +107,6 @@ namespace psegetc
 
 				pseDocument.ToCSV(csvOutputSettings);
 			}
-			//else if (_outputFormat.Contains("ami"))
-			//{
-			//	IAmibrokerService amiService = new AmibrokerService();
-			//	if (!amiService.IsAmibrokerInstalled())
-			//	{
-			//		throw new Exception("Error: Amibroker is not installed on this machine.");
-			//	}
-
-			//	string[] amiParam = _outputFormat.Split(':');
-			//	if (amiParam.Length < 2)
-			//	{
-			//		throw new Exception("Error: Unspecified Amibroker database folder.");
-			//	}
-			//	string amiDatabaseFolder = _outputFormat.Replace("ami:", string.Empty);
-
-			//	var amiOutputSettings = new AmiOutputSettings();
-			//	amiOutputSettings.DatabaseDirectory = amiDatabaseFolder;
-			//	amiOutputSettings.SectorVolumeDivider = 1000;
-			//	amiOutputSettings.UseSectorValueAsVolume = true;
-
-			//	pseDocument.ToAmibroker(amiOutputSettings);
-			//}
 		}
 
 		static void Initialize()
@@ -139,6 +117,9 @@ namespace psegetc
 				Directory.CreateDirectory(_reportsDir);
 
 			_targetPath = GetParamValue("-t");
+
+			_targetPath = "/Users/arnolddiaz/PSEGet/Mac/PSEGetc/psegetc/psegetc/bin/Debug/Reports/stockQuotes_04042017.pdf";
+
 			_dateFrom = GetParamValue("-df");
 			if (_dateFrom == "today" || _dateFrom == null)
 			{
@@ -207,7 +188,6 @@ namespace psegetc
 			Console.WriteLine("Example 3 (From file)      : pseget -t c:\\myreports\\stockQuotes_552016.pdf");
 			Console.WriteLine("Example 4 (Typical)        : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df 06/20/2016 -dt 06/24/2016 -o c:\\myfolder\\");
 			Console.WriteLine("Example 5 (CSV)            : pseget -t c:\\myreports\\stockQuotes_552016.pdf -o c:\\myfolder\\ -f csv:S,D,C");
-			//Console.WriteLine("Example 6 (Amibroker)      : pseget -t c:\\myreports\\stockQuotes_552016.pdf -f ami:\"c:\\program files\\\"");
 		}
 	}
 }
