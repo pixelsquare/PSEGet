@@ -27,8 +27,7 @@ namespace PSEGetLib.DocumentModel
 
         public PSEDocument()
         {
-            Sectors = new List<SectorItem>();
-            ExchangeNotice = new StringCollection();            
+            Sectors = new List<SectorItem>();                      
         }
 
         public void ToCSV(CSVOutputSettings csvOutputSettings)
@@ -162,7 +161,7 @@ namespace PSEGetLib.DocumentModel
             set;
         }
 
-        public StringCollection ExchangeNotice
+        public string ExchangeNotice
         {
             get;
             set;

@@ -109,6 +109,11 @@ namespace PSEGetLib
 			pattern = @"((BLOCK SALES\s)([\w\d\s,.\(\):])+)(S E C T O R A L   S U M M A R Y)";
 			Match m = Regex.Match(_reportString, pattern);
 			_pseDocument.BlockSales = m.Groups[1].Value;
+
+			// parse report notice
+			pattern = @"(TOTAL FOREIGN:\s)(.+\s){2}([\w\d\s,.\(\):])+";
+			m = Regex.Match(_reportString, pattern);
+			_pseDocument.ExchangeNotice = m.Value;
 		}
 
 		private void ParseSectorSummary()

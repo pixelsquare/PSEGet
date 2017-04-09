@@ -118,8 +118,6 @@ namespace psegetc
 
 			_targetPath = GetParamValue("-t");
 
-			_targetPath = "/Users/arnolddiaz/PSEGet/Mac/PSEGetc/psegetc/psegetc/bin/Debug/Reports/stockQuotes_04042017.pdf";
-
 			_dateFrom = GetParamValue("-df");
 			if (_dateFrom == "today" || _dateFrom == null)
 			{
@@ -169,7 +167,7 @@ namespace psegetc
 		static void DisplayHelp()
 		{
 			Console.WriteLine("PSEGet Console. (c) 2016 Arnold Diaz.");
-			Console.WriteLine("\tUsage: pseget -t [url | local path] -df [from date] -dt [to date] -o [output path] -f [csv:<format> | ami:<database path>] -d [date format]");
+			Console.WriteLine("\tUsage: pseget -t [url | local path] -df [from date] -dt [to date] -o [output path] -f [csv:<format>] -d [date format]");
 			Console.WriteLine("\t-t [url:<from: date to: date> | local path]");
 			Console.WriteLine("\t\tPSE Report File Path.\n");
 			Console.WriteLine("\t-df [from date]");
@@ -178,16 +176,16 @@ namespace psegetc
 			Console.WriteLine("\t\tOptional. Download to specified date. Date will default to -df date if not specified.\n");
 			Console.WriteLine("\t-o [output path]");
 			Console.WriteLine("\t\tOptional. Output Path. Defaults to executable path.\n");
-			Console.WriteLine("\t-f [csv:<format> | ami:<database path>]");
+			Console.WriteLine("\t-f [csv:<format>]");
 			Console.WriteLine("\t\tOptional. Target Output. Defaults to CSV.");
 			Console.WriteLine("\t\tCSV Optional <format> defaults to S,D,O,H,L,C,V,F\n");
 			Console.WriteLine("\t-d [date format]");
 			Console.WriteLine("\t\tOptional Date Format. Defaults to MM/dd/yyyy.\n");
 			Console.WriteLine("Example 1 (Download range) : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df 06/20/2016 -dt 06/24/2016 ");
 			Console.WriteLine("Example 2 (Download today) : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df today");
-			Console.WriteLine("Example 3 (From file)      : pseget -t c:\\myreports\\stockQuotes_552016.pdf");
-			Console.WriteLine("Example 4 (Typical)        : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df 06/20/2016 -dt 06/24/2016 -o c:\\myfolder\\");
-			Console.WriteLine("Example 5 (CSV)            : pseget -t c:\\myreports\\stockQuotes_552016.pdf -o c:\\myfolder\\ -f csv:S,D,C");
+			Console.WriteLine("Example 3 (From file)      : pseget -t /User/Reports/stockQuotes_552016.pdf");
+			Console.WriteLine("Example 4 (Typical)        : pseget -t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df 06/20/2016 -dt 06/24/2016 -o /User/myfolder/");
+			Console.WriteLine("Example 5 (CSV)            : pseget -t /User/Reports/stockQuotes_552016.pdf -o /User/Reports/myfolder/ -f csv:S,D,C");
 		}
 	}
 }

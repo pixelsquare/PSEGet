@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psegetc", "psegetc\psegetc.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetLibMac", "..\..\..\PSEGetLib\PSEGetLibMac.csproj", "{CF21D348-64FE-4EE6-B69E-5066CAC2C234}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSEGetTests", "PSEGetTests\PSEGetTests.csproj", "{6AE793A1-50DE-4036-9C12-A5E11A49BC55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -29,5 +31,13 @@ Global
 		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Debug|x64.Build.0 = Debug|x64
 		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|x64.ActiveCfg = Release|x64
 		{CF21D348-64FE-4EE6-B69E-5066CAC2C234}.Release|x64.Build.0 = Release|x64
+		{6AE793A1-50DE-4036-9C12-A5E11A49BC55}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6AE793A1-50DE-4036-9C12-A5E11A49BC55}.Debug|x86.Build.0 = Debug|Any CPU
+		{6AE793A1-50DE-4036-9C12-A5E11A49BC55}.Release|x86.ActiveCfg = Release|Any CPU
+		{6AE793A1-50DE-4036-9C12-A5E11A49BC55}.Release|x86.Build.0 = Release|Any CPU
+		{6AE793A1-50DE-4036-9C12-A5E11A49BC55}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6AE793A1-50DE-4036-9C12-A5E11A49BC55}.Debug|x64.Build.0 = Debug|Any CPU
+		{6AE793A1-50DE-4036-9C12-A5E11A49BC55}.Release|x64.ActiveCfg = Release|Any CPU
+		{6AE793A1-50DE-4036-9C12-A5E11A49BC55}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
