@@ -231,7 +231,8 @@ namespace PSEGetLib
 					}
 
 					StockItem stock = ParseStockLine(line, sector);
-					subSector.Stocks.Add(stock);
+                    if (stock != null)
+					    subSector.Stocks.Add(stock);
 				}
 
 			}
@@ -257,6 +258,12 @@ namespace PSEGetLib
 			StockItem stock = new StockItem(_pseDocument, sector);
 
 			string[] stockInfo = stockText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (stockInfo.Length < 10)
+            {
+                //throw new Exception(string.Format("Invalid stock line: {0}", stockText));
+                return null;
+            }
 
 			// easier to work from end of the array first
 			stockInfo = stockInfo.Reverse<string>().ToArray<string>();
