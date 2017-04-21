@@ -17,6 +17,7 @@ namespace PSEGetLib
 		private string _reportString;
 		private PSEDocument _pseDocument;
 		private NameValueCollection sectorNameMap = new NameValueCollection();
+        private string _errorLine; // malformed stock line work around
 
 		public void Fill(PSEDocument pseDocument)
 		{
@@ -180,8 +181,8 @@ namespace PSEGetLib
 			SectorItem sector = null;
 			SubSectorItem subSector = null;
 			foreach (var line in lines)
-			{				
-
+			{
+              
 				// end of the line
 				var pattern = @"(TOTAL MAIN BOARD.+\s+)(.+)";
 				if (Regex.Match(line, pattern).Success)
@@ -217,7 +218,19 @@ namespace PSEGetLib
 
 				// will only match stocks that has trading activity
 				pattern = @"\b([\w]+\s)+\b([0-9\.\s,\(\)\-]+)";
-				if (Regex.Match(line, pattern).Success)
+
+                // malformed report line looks like this
+                // 506,200 8,042,620 4,009,350
+                // LT GROUP LTG 15.9 15.98 15.78 15.98 15.78 15.9
+                var stockLine = line;
+                if (_errorLine != string.Empty)
+                {
+                    // fix the malformed line
+                    stockLine = line + " " + _errorLine;
+                    _errorLine = string.Empty; // reset
+                }
+
+				if (Regex.Match(stockLine, pattern).Success)
 				{
 					// found the stock line
 					Debug.Assert(sector != null, "Unable to initialize the sector object.");
@@ -230,7 +243,7 @@ namespace PSEGetLib
 						sector.SubSectors.Add(subSector);
 					}
 
-					StockItem stock = ParseStockLine(line, sector);
+					StockItem stock = ParseStockLine(stockLine, sector);
                     if (stock != null)
 					    subSector.Stocks.Add(stock);
 				}
@@ -262,6 +275,7 @@ namespace PSEGetLib
             if (stockInfo.Length < 10)
             {
                 //throw new Exception(string.Format("Invalid stock line: {0}", stockText));
+                _errorLine = stockText.Trim();
                 return null;
             }
 

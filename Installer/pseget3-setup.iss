@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PSEGet"
-#define MyAppVersion "3.1.1.0"
+#define MyAppVersion "3.1.2.0"
 #define MyAppPublisher "Yeahbah!"
 #define MyAppURL ""
 #define MyAppExeName "PSEGet3.exe"
