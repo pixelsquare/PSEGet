@@ -341,9 +341,10 @@ namespace PSEGetLib
 
 		private DateTime GetTradeDate()
 		{
-			Match match = Regex.Match(_reportString, @"(?i)(April|May|June|July|August|September|October|November|December)\s+\d+.,.\d+");
+			Match match = Regex.Match(_reportString, @"(?i)(April|May|June|July|August|September|October|November|December|January|February|March)\s+\d+.,.\d+");
 			if (match.Success)
 			{
+			    _reportString = _reportString.Replace(match.Value, string.Empty);
 				var dateStr = match.Value;
 				return DateTime.Parse(dateStr);
 			}
