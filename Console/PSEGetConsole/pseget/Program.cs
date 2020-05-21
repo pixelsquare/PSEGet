@@ -6,6 +6,7 @@ using PSEGetLib.Service;
 using PSEGetLib.DocumentModel;
 using PSEGetLib.Converters;
 using System.Reflection;
+using System.Net;
 
 namespace pseget
 {
@@ -45,7 +46,7 @@ namespace pseget
                 throw new Exception("Error: Unspecified PSE report file path.");                
             }
                                    
-            if (_targetPath.Contains("http:"))
+            if (_targetPath.Contains("https:"))
             {
                 var downloadParams = new DownloadParams();
                 downloadParams.BaseURL = _targetPath;
@@ -92,6 +93,7 @@ namespace pseget
                     csvFormat = csvFormat.Replace("C", "{C}");
                     csvFormat = csvFormat.Replace("V", "{V}");
                     csvFormat = csvFormat.Replace("F", "{F}");
+                    csvFormat = csvFormat.Replace("N", "{N}");
                 }
                 else
                     csvFormat = "{S},{D},{O},{H},{L},{C},{V},{F}";

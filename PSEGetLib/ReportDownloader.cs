@@ -26,6 +26,8 @@ namespace PSEGetLib
         public bool AsyncMode { get; set; }
         public ReportDownloader()
         {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             DownloadedFiles = new List<DownloadFileInfo>();
             AsyncMode = true;
             //FailedDownloadFiles = new List<string>();
@@ -136,7 +138,7 @@ namespace PSEGetLib
             }
             catch(Exception e)
             {
-                OnReportDownloadCompletedEvent(this, new AsyncCompletedEventArgs(e, false, null));
+                OnReportDownloadCompletedEvent?.Invoke(this, new AsyncCompletedEventArgs(e, false, null));
                 if (downloadQueue.Count == 0)
                     OnDownloadAllCompletedEvent(this, new EventArgs() );
             }

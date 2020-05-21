@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-t http://www.pse.com.ph/resource/dailyquotationreport/file/ -df 4/11/2017</StartArguments>
+    <StartArguments>-t https://www.pse.com.ph/resource/dailyquotationreport/file/ -df today -f csv:S,N,D,O,H,L,C</StartArguments>
   </PropertyGroup>
 </Project>
