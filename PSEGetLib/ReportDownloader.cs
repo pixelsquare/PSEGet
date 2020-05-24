@@ -133,7 +133,7 @@ namespace PSEGetLib
                 else
                 {                    
                     throw new PSEGetException("There were no pse reports found in the dates you specified.");
-                }            
+                }
                 ProcessQueue();
             }
             catch(Exception e)
@@ -149,16 +149,31 @@ namespace PSEGetLib
             if (downloadQueue.Count > 0)
             {
                 var downloadParams = (DownloadParams)downloadQueue.Dequeue();
+
+                int totalDays = GetTotalDays();
+                int count = totalDays - downloadQueue.Count;
+
                 CurrentDownloadFile = SavePath + Helpers.GetDirectorySeparator() + downloadParams.FileName;
+                
                 if (AsyncMode)
                     wc.DownloadFileAsync(new Uri(downloadParams.ToString()), CurrentDownloadFile);
                 else
                 {
+                    try
+                    {
+                        float progress = ((float)count / (float)totalDays) * 100f;
+                        Console.Write($"Downloading {System.IO.Path.GetFileNameWithoutExtension(CurrentDownloadFile)} ({progress.ToString("0")}%) ... ");
+                        wc.DownloadFile(new Uri(downloadParams.ToString()), CurrentDownloadFile);
 
-					wc.DownloadFile(new Uri(downloadParams.ToString()), CurrentDownloadFile);
+                        // since we are in blocking mode we have to set success explicitly
+                        DownloadedFiles.Last().Success = true;
+                        Console.WriteLine($"SUCCESS!");
+                    }
+                    catch(WebException ex)
+                    {
+                        Console.WriteLine($"\nERROR: {ex.Message} ({System.IO.Path.GetFileNameWithoutExtension(CurrentDownloadFile)})");
+                    }
 
-					// since we are in blocking mode we have to set success explicitly
-					DownloadedFiles.Last().Success = true;
                     ProcessQueue();
                 }
             }
@@ -169,6 +184,24 @@ namespace PSEGetLib
                     OnDownloadAllCompletedEvent(this, new EventArgs());
                 }
             }
+        }
+
+        private int GetTotalDays()
+        {
+            DateTime df = DownloadParams.FromDate;
+            DateTime dt = DownloadParams.ToDate;
+
+            int count = 0;
+
+            for(DateTime i = df; i < dt; i = i.AddDays(1))
+            {
+                if(i.DayOfWeek != DayOfWeek.Saturday && i.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         public void Download(DownloadParams downloadParams)
