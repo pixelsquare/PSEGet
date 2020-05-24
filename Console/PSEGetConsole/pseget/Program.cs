@@ -58,12 +58,23 @@ namespace pseget
                 downloader.AsyncMode = false;
                 downloader.Download();
 
+                Console.WriteLine("---");
+
+                int count = 0;
+                int len = downloader.DownloadedFiles.Count - 1;
                 foreach(DownloadFileInfo reportFile in downloader.DownloadedFiles)
                 {
                     if (reportFile.Success)
+                    {
+                        float progress = count > 0 ? ((float)count / (float)len) * 100f : 0f;
+                        Console.Write($"Converting files ({progress.ToString("0")}%) ... ");
+
                         ConvertIt(reportFile.Filename);
+
+                        count++;
+                        Console.WriteLine("SUCCESS!");
+                    }
                 }               
-               
             }
             else
             {
