@@ -161,7 +161,7 @@ namespace PSEGetLib
                 {
                     try
                     {
-                        float progress = ((float)count / (float)totalDays) * 100f;
+                        float progress = count > 0 ? ((float)count / (float)totalDays) * 100f : 0f;
                         Console.Write($"Downloading {System.IO.Path.GetFileNameWithoutExtension(CurrentDownloadFile)} ({progress.ToString("0")}%) ... ");
                         wc.DownloadFile(new Uri(downloadParams.ToString()), CurrentDownloadFile);
 
