@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using PSEGetLib;
 using PSEGetLib.Interfaces;
@@ -48,33 +48,46 @@ namespace pseget
                                    
             if (_targetPath.Contains("https:"))
             {
-                var downloadParams = new DownloadParams();
-                downloadParams.BaseURL = _targetPath;
-                downloadParams.FileName = "stockQuotes_%mm%dd%yyyy";
-                downloadParams.FromDate = Convert.ToDateTime(_dateFrom);
-                downloadParams.ToDate = Convert.ToDateTime(_dateTo);                
+                //var downloadParams = new DownloadParams();
+                //downloadParams.BaseURL = _targetPath;
+                //downloadParams.FileName = "stockQuotes_%mm%dd%yyyy";
+                //downloadParams.FromDate = Convert.ToDateTime(_dateFrom);
+                //downloadParams.ToDate = Convert.ToDateTime(_dateTo);
 
-                var downloader = new ReportDownloader(downloadParams, _reportsDir, null);
-                downloader.AsyncMode = false;
-                downloader.Download();
+                //var downloader = new ReportDownloader(downloadParams, _reportsDir, null);
+                //downloader.AsyncMode = false;
+                //downloader.Download();
 
-                Console.WriteLine("---");
+                //Console.WriteLine("---");
+
+                //int count = 0;
+                //int len = downloader.DownloadedFiles.Count;
+                //foreach (DownloadFileInfo reportFile in downloader.DownloadedFiles)
+                //{
+                //    count++;
+                //    float progress = count > 0 ? ((float)count / (float)len) * 100f : 0f;
+                //    Console.Write($"Converting {Path.GetFileNameWithoutExtension(reportFile.Filename)} [{count}/{len}] ({progress.ToString("0")}%) ... ");
+                //    if (reportFile.Success)
+                //    {
+                //        ConvertIt(reportFile.Filename);
+                //        Console.WriteLine("SUCCESS!");
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine("FAILED!");
+                //    }
+                //}
 
                 int count = 0;
-                int len = downloader.DownloadedFiles.Count - 1;
-                foreach(DownloadFileInfo reportFile in downloader.DownloadedFiles)
+                int len = Directory.GetFiles(_reportsDir).Length;
+                foreach (string file in Directory.GetFiles(_reportsDir))
                 {
-                    if (reportFile.Success)
-                    {
-                        float progress = count > 0 ? ((float)count / (float)len) * 100f : 0f;
-                        Console.Write($"Converting files ({progress.ToString("0")}%) ... ");
-
-                        ConvertIt(reportFile.Filename);
-
-                        count++;
-                        Console.WriteLine("SUCCESS!");
-                    }
-                }               
+                    count++;
+                    float progress = count > 0 ? ((float)count / (float)len) * 100f : 0f;
+                    Console.Write($"Converting {Path.GetFileNameWithoutExtension(file)} [{count}/{len}] ({progress.ToString("0")}%) ... ");
+                    ConvertIt(file);
+                    Console.WriteLine("SUCCESS!");
+                }
             }
             else
             {
