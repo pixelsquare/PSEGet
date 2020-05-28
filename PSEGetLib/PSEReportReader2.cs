@@ -31,8 +31,12 @@ namespace PSEGetLib
             InitSectors();
 
 			pseDocument.TradeDate = GetTradeDate();
-			if (pseDocument.TradeDate.CompareTo(new DateTime(2017, 4, 4)) < 0)
-				throw new EUnsupportedReportFormat("Unsupported report format. Quotation reports prior to April 6, 2017 are not supported.");
+            //if (pseDocument.TradeDate.CompareTo(new DateTime(2017, 4, 4)) < 0)
+            //    throw new EUnsupportedReportFormat("Unsupported report format. Quotation reports prior to April 6, 2017 are not supported.");
+			
+			// PixelSquare: Moved the datel imit to 12-01-2016		
+            if (pseDocument.TradeDate.CompareTo(new DateTime(2016, 12, 1)) < 0)
+				throw new EUnsupportedReportFormat("Unsupported report format. Quotation reports prior to December 1, 2016 are not supported.");
 			
 			CleanupReportString();
 
@@ -126,8 +130,14 @@ namespace PSEGetLib
 
 			MatchCollection matches = Regex.Matches(_reportString, pattern);
 			for (var sectorIndex = 0; sectorIndex < matches.Count; sectorIndex++)
-			{
-				GroupCollection matchCol = matches[sectorIndex].Groups;
+            {
+                // PixelSquare: Prevent parsing unused sector data
+                if (sectorIndex > 10)
+                {
+                    break;
+                }
+
+                GroupCollection matchCol = matches[sectorIndex].Groups;
 
 				// index match
 				var indexName = matchCol[1].Value;
@@ -142,12 +152,14 @@ namespace PSEGetLib
 					sectorItem.Low = double.Parse(row[3], NumberStyles.Any);
 					sectorItem.High = double.Parse(row[4], NumberStyles.Any);
 					sectorItem.Open = double.Parse(row[5], NumberStyles.Any);
+                    sectorItem.FullName = "Philippine Stocks Exchange Index";
+                    sectorItem.IsIndex = true;
 				}
 				else if (indexName == "GRAND TOTAL")
 				{					
 					SectorItem sectorItem = _pseDocument.GetSector(PSEDocument.PSEI);
                     sectorItem.Value = double.Parse(row[0], NumberStyles.Any);                    
-                    sectorItem.Volume = ulong.Parse(row[1], NumberStyles.Any);                    
+                    sectorItem.Volume = ulong.Parse(row[1], NumberStyles.Any);             
 				}
 				else
 				{
@@ -320,6 +332,7 @@ namespace PSEGetLib
             }
 
 			stock.Description = stockDescription.Trim();
+            stock.FullName = stockDescription.Trim();
 
 			return stock;
 		}
