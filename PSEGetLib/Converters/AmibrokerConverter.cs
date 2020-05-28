@@ -41,12 +41,14 @@ namespace PSEGetLib.Converters
                 throw new PSEGetException("Unable to find Amibroker.");
             
             // open the amibroker
-            object x = amiInvoker.Property("Visible").Get<object>();
-            if (x.ToString() == "0")
-            {
-                x = 1;
-                amiInvoker.Property("Visible").Set(x);
-            }
+            // PixelSquare: Launch amibroker silently
+
+            //object x = amiInvoker.Property("Visible").Get<object>();
+            //if (x.ToString() == "0")
+            //{
+            //    x = 1;
+            //    amiInvoker.Property("Visible").Set(x);
+            //}
 
             var databaseLoaded = amiInvoker.Method("LoadDatabase").AddParameter(this.OutputSettings.DatabaseDirectory).Invoke<bool>();
             if (!databaseLoaded)
@@ -95,6 +97,17 @@ namespace PSEGetLib.Converters
             //    // new 5.4 and up properties
             //    stock.Property("FullName").Set(stockData.Description);
             //}
+            
+            stock.Property("FullName").Set(stockData.FullName);
+            stock.Property("Currency").Set(stockData.Currency);
+
+            //stock.Property("MarketID").Set(0);
+            //stock.Property("GroupID").Set(0);
+            //stock.Property("IndustryID").Set(0);
+
+            stock.Property("Favourite").Set(stockData.IsFavourite);
+            stock.Property("Index").Set(stockData.IsIndex);
+
             quotation.Property("Open").Set(stockData.Open);
             quotation.Property("High").Set(stockData.High);
             quotation.Property("Low").Set(stockData.Low);

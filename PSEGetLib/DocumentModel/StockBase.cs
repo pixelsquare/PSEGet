@@ -12,6 +12,16 @@
 
 		public string Description { get; set; }
 
+        public string FullName { get; set; } = "";
+
+        public string Currency { get; set; } = "PHP";
+
+        public string Market { get; set; } = "PSEi";
+
+        public bool IsFavourite { get; set; } = false;
+
+        public bool IsIndex { get; set; } = false;
+
 		public double Open { get; set; }
 
 		public double High { get; set; }
